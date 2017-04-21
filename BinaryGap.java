@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Binary {
+public class BinaryGap {
 	public static void main(String[] args){
 		System.out.println(solution(561892));
 	}
@@ -21,7 +21,6 @@ public class Binary {
 				if(tempLen >= maxLen){
 					maxLen = tempLen;
 					tempLen = 0;
-					System.out.println(maxLen);
 				}else{
 					tempLen =0;
 				}
