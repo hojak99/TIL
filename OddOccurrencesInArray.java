@@ -16,5 +16,5 @@ public class OddOccurrencesInArray {
 		return temp;
 	}
 	
-	// ½Ã°£ º¹Àâµµ ½ÇÈ­³Ä?
+	// ì‹¤í™”ëƒ?
 }
