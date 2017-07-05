@@ -6,3 +6,6 @@ CREATE TABLE users (
 );
 
 SELECT * FROM USERS;
+
+-- users 테이블에서 'whiteship' 이란 id 를 가진 데이터를 삭제
+DELETE FROM users WHERE id = 'whiteship';

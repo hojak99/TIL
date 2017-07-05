@@ -5,25 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao {
-	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		UserDao dao = new UserDao();
-		
-		User user = new User();
-		user.setId("whiteship");
-		user.setName("백기선");
-		user.setPassword("married");
-		
-		dao.add(user);
-		
-		System.out.println(user.getId() + ": 등록 성공");
-		User user2 = dao.get(user.getId());
-		System.out.println(user2.getName());
-		System.out.println(user2.getPassword());
-		
-		System.out.println(user2.getId() + ": 조회 성공");
-	}
+public abstract class UserDao {
 	
 	public void add(User user) throws ClassNotFoundException, SQLException {
 		Connection connection = getConnection();
@@ -62,10 +44,6 @@ public class UserDao {
 		return user;
 	}
 	
-	private Connection getConnection() throws ClassNotFoundException, SQLException {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "hojak99", "0430");
-		
-		return connection;
-	}
+	public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 }
+
