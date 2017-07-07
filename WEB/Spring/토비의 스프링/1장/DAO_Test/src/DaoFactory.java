@@ -2,16 +2,22 @@ import java.sql.Connection;
 
 public class DaoFactory {
 	public UserDao userDaoD(){
-		ConnectionMaker connectionMakerD = new DConnectionMaker();
-		UserDao userDaoD = new UserDao(connectionMakerD);
-		
-		return userDaoD;
+		return new UserDao(connectionMaker());
 	}
 	
 	public UserDao userDaoN(){
-		ConnectionMaker connectionMakerN = new NConnectionMaker();
-		UserDao userDaoN = new UserDao(connectionMakerN);
-		
-		return userDaoN;
+		return new UserDao(connectionMaker());
+	}
+	
+	public AccountDao accountDao(){
+		return new AccountDao(connectionMaker());
+	}
+	
+	public MessageDao messageDao(){
+		return new MessageDao(connectionMaker());
+	}
+	
+	public ConnectionMaker connectionMaker(){
+		return new DConnectionMaker();
 	}
 }
