@@ -1,10 +1,13 @@
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DConnectionMaker implements ConnectionMaker {
 	
 	public Connection makeConnection() throws ClassNotFoundException, SQLException {
-		// D사의 독자적인 방법으로 Connection 을 생성하는 코드
-		return null;
+		Class.forName("oracle.jdbc.driver.OracleDriver"); 		
+		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "hojak99", "0430");
+		
+		return connection;
 	}
 }
