@@ -5,6 +5,13 @@ var x = canvas.width / 2;
 var y = canvas.height - 30;
 var dx = 2;
 var dy = -2;
+var brickRowCount = 3;
+var brickColumnCount = 5;
+var brickWidth = 75;
+var brickHeight = 20;
+var brickPadding = 10;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
 
 var ballRadius = 10;
 
@@ -18,6 +25,14 @@ var leftPressed = false;
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
+
+var bricks = [];
+for(i=0; i<brickColumnCount; ++i){
+    bricks[i] = [];
+    for(q = 0; q<brickRowCount; ++q){
+        bricks[i][q] = {x:0, y:0};
+    }
+}
 
 function drawBall() {
     ctx.beginPath();
@@ -35,9 +50,26 @@ function drawPaddle() {
     ctx.closePath();
 }
 
+function drawBricks() {
+    for(i = 0; i<brickColumnCount; ++i){
+        for(q = 0; q<brickRowCount; ++q){
+            var brickX = (i*(brickWidth+brickPadding))+brickOffsetLeft;
+            var brickY = (q*(brickHeight+brickPadding))+brickOffsetTop;
+            bricks[i][q].x = brickX;
+            bricks[i][q].y = brickY;
+            ctx.beginPath();
+            ctx.rect(brickX, brickY, brickWidth, brickHeight);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();    
+        }
+    }
+}
+
 
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBricks();
     drawBall();
     drawPaddle();
 
