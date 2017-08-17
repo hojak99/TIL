@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 
+		ApplicationContext context = new ClassPathXmlApplicationContext("car-config.xml");
+		OrderManager manager = context.getBean("manager", OrderManager.class);
+		manager.order();
+	 -->
+	 
+	 <bean id="kia" class="com.kjh.hojak.ioc_4.KiaMaker"></bean>
+	 <bean id="hyndai" class="com.kjh.hojak.ioc_4.HyndaiMaker"></bean>
+
+	<bean id="manager" class="com.kjh.hojak.ioc_4.OrderManager">
+		<!-- 필드변수 maker 에 직접 넣는게 아니라 setMaker() 메소드로 주입한다 -->
+		<property name="maker" ref="kia"></property>	
+	</bean>
+</beans>

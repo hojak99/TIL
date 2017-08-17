@@ -1,4 +1,4 @@
-package com.kjh.hojak.ioc_3;
+package com.kjh.hojak.ioc_4;
 
 public class Car {
 	private String name;
