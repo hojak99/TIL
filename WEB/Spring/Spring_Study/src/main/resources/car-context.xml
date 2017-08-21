@@ -9,10 +9,10 @@
 		manager.order();
 	 -->
 	 
-	 <bean id="kia" class="com.kjh.hojak.ioc_4.KiaMaker"></bean>
-	 <bean id="hyndai" class="com.kjh.hojak.ioc_4.HyndaiMaker"></bean>
+	 <bean id="kia" class="com.kjh.hojak.spring_1.ioc_4.KiaMaker"></bean>
+	 <bean id="hyndai" class="com.kjh.hojak.spring_1.ioc_4.HyundaiMaker"></bean>
 
-	<bean id="manager" class="com.kjh.hojak.ioc_4.OrderManager">
+	<bean id="manager" class="com.kjh.hojak.spring_1.ioc_4.OrderManager">
 		<!-- 필드변수 maker 에 직접 넣는게 아니라 setMaker() 메소드로 주입한다 -->
 		<property name="maker" ref="kia"></property>	
 	</bean>

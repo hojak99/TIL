@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+	
+	<bean id="hello" class="com.kjh.hojak.spring_2.DI_Application.Hello">
+		<!-- setName(name)s -->
+		<property name="name" value="Spring"></property>
+		<!-- setPrinter(printer) -->
+		<property name="printer" ref="stringPrinter"></property>
+	</bean>
+	
+	<bean id="stringPrinter" class="com.kjh.hojak.spring_2.DI_Application.StringPrinter"></bean>
+	<bean id="consolePrinter" class="com.kjh.hojak.spring_2.DI_Application.ConsolePrinter"></bean>
+
+</beans>
