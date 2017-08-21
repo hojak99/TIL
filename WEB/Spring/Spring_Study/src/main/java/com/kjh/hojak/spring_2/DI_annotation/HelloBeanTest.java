@@ -1,8 +1,6 @@
-package com.kjh.hojak.spring_2.DI_Application;
+package com.kjh.hojak.spring_2.DI_annotation;
 
-import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 public class HelloBeanTest {
