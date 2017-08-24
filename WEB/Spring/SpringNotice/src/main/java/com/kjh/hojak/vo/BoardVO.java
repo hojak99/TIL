@@ -40,13 +40,13 @@ public class BoardVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	public int getViewCount() {
+	
+	public int getViewcnt() {
 		return viewcnt;
 	}
-	public void setViewCount(int viewCount) {
-		this.viewcnt = viewCount;
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
 	}
-	
 	@Override
 	public String toString() {
 		return "BoardVO ["

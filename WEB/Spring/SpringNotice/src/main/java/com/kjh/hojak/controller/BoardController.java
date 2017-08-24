@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kjh.hojak.service.BoardService;
 import com.kjh.hojak.vo.BoardVO;
 
-// ÇöÀç Å¬·¡½º¸¦ ÄÁÆ®·Ñ·¯ bean À¸·Î µî·Ï
+// í˜„ì¬ í´ë˜ìŠ¤ë¥¼ ì»¨íŠ¸ë¡¤ëŸ¬ bean ìœ¼ë¡œ ë“±ë¡
 @Controller
 @RequestMapping("/board/*")
 public class BoardController {
@@ -23,56 +23,57 @@ public class BoardController {
 	@Inject
 	BoardService boardService;
 	
-	// 01. °Ô½Ã±Û ¸ñ·Ï
+	// 01. ê²Œì‹œê¸€ ëª©ë¡
 	@RequestMapping("list.do")
 	public ModelAndView list() throws Exception {
 		List<BoardVO> list = boardService.listAll();
 		
+		System.out.println(list.size());
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("list");			// ºä¸¦ list.jsp ·Î ¼³Á¤
-		mav.addObject("list", list);			// µ¥ÀÌÅÍ ÀúÀå
-		return mav;				// list.jsp ·Î list Àü´Ş
+		mav.setViewName("list");			// ë·°ë¥¼ list.jsp ë¡œ ì„¤ì •
+		mav.addObject("list", list);			// ë°ì´í„° ì €ì¥
+		return mav;				// list.jsp ë¡œ list ì „ë‹¬
 	}
 	
-	// 02_01. °Ô½Ã±Û ÀÛ¼ºÈ­¸é
+	// 02_01. ê²Œì‹œê¸€ ì‘ì„±í™”ë©´
 	// @RequestMapping("board/writer.do")
-	// value="", method="Àü¼Û¹æ½Ä"
+	// value="", method="ì „ì†¡ë°©ì‹"
 	@RequestMapping(value="write.do", method=RequestMethod.GET)
 	public String write(){
-		return "board/wrter";	// writer.jsp ·Î ÀÌµ¿
+		return "writer";	// writer.jsp ë¡œ ì´ë™
 	}
 	
-	// 02_02. °Ô½Ã±Û ÀÛ¼ºÃ³¸®
+	// 02_02. ê²Œì‹œê¸€ ì‘ì„±ì²˜ë¦¬
 	@RequestMapping (value="insert.do", method=RequestMethod.POST)
 	public String insert(@ModelAttribute BoardVO vo) throws Exception{
 		boardService.create(vo);
 		return "redirect:list.do";
 	}
 	
-	// 03. °Ô½Ã±Û »ó¼¼³»¿ë Á¶È¸, °Ô½Ã±Û Á¶È¸¼ö Áõ°¡Ã³¸®
-	// @RequestParam : get/post ¹æ½ÄÀ¸·Î Àü´ŞµÈ º¯¼ö 1°³
-	// HttpSession ¼¼¼Ç °´Ã¼
+	// 03. ê²Œì‹œê¸€ ìƒì„¸ë‚´ìš© ì¡°íšŒ, ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ì²˜ë¦¬
+	// @RequestParam : get/post ë°©ì‹ìœ¼ë¡œ ì „ë‹¬ëœ ë³€ìˆ˜ 1ê°œ
+	// HttpSession ì„¸ì…˜ ê°ì²´
 	@RequestMapping(value="view.do", method=RequestMethod.GET)
 	public ModelAndView view(@RequestParam int bno, HttpSession session) throws Exception {
-		// Á¶È¸¼ö Áõ°¡ Ã³¸®
-		boardService.increaseViewCount(bno, session);
+		// ì¡°íšŒìˆ˜ ì¦ê°€ ì²˜ë¦¬
+		boardService.increaseViewcnt(bno, session);
 		
-		// ¸ğµ¨(µ¥ÀÌÅÍ) + ºä(È­¸é)À» ÇÔ²² Àü´ŞÇÏ´Â °´Ã¼
+		// ëª¨ë¸(ë°ì´í„°) + ë·°(í™”ë©´)ì„ í•¨ê»˜ ì „ë‹¬í•˜ëŠ” ê°ì²´
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("board/view");
+		mav.setViewName("view");
 		mav.addObject("dto", boardService.read(bno));
 		return mav;
 	}
 	
-	// 04. °Ô½Ã±Û ¼öÁ¤
-	// Æû¿¡¼­ ÀÔ·ÂÇÑ ³»¿ëµéÀº @ModelAttribute BoardVO vo ·Î Àü´Ş
+	// 04. ê²Œì‹œê¸€ ìˆ˜ì •
+	// í¼ì—ì„œ ì…ë ¥í•œ ë‚´ìš©ë“¤ì€ @ModelAttribute BoardVO vo ë¡œ ì „ë‹¬
 	@RequestMapping(value="update.do", method=RequestMethod.POST)
 	public String update(@ModelAttribute BoardVO vo) throws Exception {
 		boardService.update(vo);
 		return "redirect:list.do";
 	}
 	
-	// 05. °Ô½Ã±Û »èÁ¦
+	// 05. ê²Œì‹œê¸€ ì‚­ì œ
 	@RequestMapping("delete.do")
 	public String delete(@RequestParam int bno) throws Exception {
 		boardService.delete(bno);

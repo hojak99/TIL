@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kjh.hojak.vo.BoardVO;
 
-// ÇöÀç Å¬·¡½º¸¦ dao bean À¸·Î µî·Ï
+// ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dao bean ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 @Repository		
 public class BoardDAOImpl implements BoardDAO{
 
@@ -42,8 +42,8 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public void increaseViewCount(int bno) throws Exception {
-		sqlSession.update("board.increaseViewCount", bno);
+	public void increaseViewcnt(int bno) throws Exception {
+		sqlSession.update("board.increaseViewcnt", bno);
 	}
   
 }

@@ -15,7 +15,7 @@ public class BoardServiceImpl implements BoardService {
 	@Inject
 	BoardDAO boardDao;
 
-	// 01. °Ô½Ã±Û¾²±â
+	// 01. ï¿½Ô½Ã±Û¾ï¿½ï¿½ï¿½
 	@Override
 	public void create(BoardVO vo) throws Exception {
 		String title = vo.getTitle();
@@ -37,7 +37,7 @@ public class BoardServiceImpl implements BoardService {
 		boardDao.create(vo);
 	}
 
-	// 02. °Ô½Ã±Û »ó¼¼º¸±â
+	// 02. ï¿½Ô½Ã±ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	@Override
 	public BoardVO read(int bno) throws Exception {
 		return boardDao.read(bno);
@@ -59,7 +59,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void increaseViewCount(int bno, HttpSession session) throws Exception {
+	public void increaseViewcnt(int bno, HttpSession session) throws Exception {
 		long update_time = 0;
 		
 		if(session.getAttribute("update_time_"+bno) != null){
@@ -69,7 +69,7 @@ public class BoardServiceImpl implements BoardService {
 		long current_time = System.currentTimeMillis();
 		
 		if(current_time - update_time > 5*1000) {
-			boardDao.increaseViewCount(bno);
+			boardDao.increaseViewcnt(bno);
 			session.setAttribute("update_time_"+bno, current_time);
 		}
 	}
