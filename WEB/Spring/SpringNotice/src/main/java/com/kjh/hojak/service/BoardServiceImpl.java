@@ -73,6 +73,11 @@ public class BoardServiceImpl implements BoardService {
 			session.setAttribute("update_time_"+bno, current_time);
 		}
 	}
+
+	@Override
+	public String checkPassword(int bno) throws Exception {
+		return boardDao.checkPassword(bno);
+	}
 	
 	
 }

@@ -25,4 +25,7 @@ public interface BoardService {
 	
 	// 06. �Խñ� ��ȸ
 	public void increaseViewcnt(int bno, HttpSession session) throws Exception;
+	
+	// 삭제 및 수정 시 비밀번호 조회
+	public String checkPassword(int bno) throws Exception;
 }

@@ -23,4 +23,7 @@ public interface BoardDAO {
 	
 	// 06. �Խñ� ��ȸ ����
 	public void increaseViewcnt(int bno) throws Exception;
+	
+	// 삭제 및 수정할 시에 패스워드 조회
+	public String checkPassword(int bno) throws Exception;
 }

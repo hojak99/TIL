@@ -45,5 +45,10 @@ public class BoardDAOImpl implements BoardDAO{
 	public void increaseViewcnt(int bno) throws Exception {
 		sqlSession.update("board.increaseViewcnt", bno);
 	}
+
+	@Override
+	public String checkPassword(int bno) throws Exception {
+		return sqlSession.selectOne("board.checkPassword", bno);
+	}
   
 }

@@ -68,15 +68,35 @@ public class BoardController {
 	// 04. 게시글 수정
 	// 폼에서 입력한 내용들은 @ModelAttribute BoardVO vo 로 전달
 	@RequestMapping(value="update.do", method=RequestMethod.POST)
-	public String update(@ModelAttribute BoardVO vo) throws Exception {
-		boardService.update(vo);
-		return "redirect:list.do";
+	public ModelAndView update(@ModelAttribute BoardVO vo) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		if(!boardService.checkPassword(vo.getBno()).equals(vo.getPassword())){
+			mav.setViewName("view");
+			mav.addObject("dto", boardService.read(vo.getBno()));
+		}else{
+			boardService.update(vo);
+			mav.setViewName("list");
+			mav.setViewName("redirect:list.do");
+		}
+		
+		return mav;
 	}
 	
 	// 05. 게시글 삭제
 	@RequestMapping("delete.do")
-	public String delete(@RequestParam int bno) throws Exception {
-		boardService.delete(bno);
-		return "redirect:list.do";
+	public ModelAndView delete(@ModelAttribute BoardVO vo) throws Exception {
+		
+		ModelAndView mav = new ModelAndView();
+		if(!boardService.checkPassword(vo.getBno()).equals(vo.getPassword())){
+			mav.setViewName("view");
+			mav.addObject("dto", boardService.read(vo.getBno()));
+		}else{
+			boardService.delete(vo.getBno());
+			mav.setViewName("list");
+			mav.setViewName("redirect:list.do");
+		}
+		
+		return mav;
 	}
 }
