@@ -9,6 +9,7 @@ public class BoardVO {
 	private String writer;
 	private Date regdate;
 	private int viewcnt;
+	private String password;
 	
 	public int getBno() {
 		return bno;
@@ -40,11 +41,19 @@ public class BoardVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	public int getViewCount() {
+	
+	public int getViewcnt() {
 		return viewcnt;
 	}
-	public void setViewCount(int viewCount) {
-		this.viewcnt = viewCount;
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	@Override

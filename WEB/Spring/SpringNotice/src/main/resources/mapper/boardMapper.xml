@@ -18,15 +18,15 @@
 	
 	<insert id="insert">
 		INSERT INTO tbl_board (
-			bno,
 			title,
 			content,
-			writer
+			writer,
+			password
 		) VALUES (
-			(SELECT NVL(MAX(bno) + 1, 1) FROM tbl_board),
 			#{title},
 			#{content},
-			#{wrter}
+			#{writer},
+			#{password}
 		)
 	</insert>
 	
@@ -53,5 +53,10 @@
 		DELETE FROM tbl_board
 		WHERE bno = #{bno}
 	</delete>
+	
+	<!-- 삭제 및 수정할 시 비밀번호 조회 -->
+	<select id="checkPassword" resultType="java.lang.String">
+		SELECT password FROM tbl_board WHERE bno = #{bno}
+	</select>
 </mapper>
 

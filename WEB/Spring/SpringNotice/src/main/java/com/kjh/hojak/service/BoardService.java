@@ -8,21 +8,24 @@ import com.kjh.hojak.vo.BoardVO;
 
 public interface BoardService {
 
-	// 01. °Ô½Ã±Û ÀÛ¼º
+	// 01. ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½
 	public void create(BoardVO vo) throws Exception;
 	
-	// 02. °Ô½Ã±Û »ó¼¼º¸±â
+	// 02. ï¿½Ô½Ã±ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	public BoardVO read(int bno) throws Exception;
 	
-	// 03. °Ô½Ã±Û ¼öÁ¤
+	// 03. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void update(BoardVO vo) throws Exception;
 	
-	// 04. °Ô½Ã±Û »èÁ¦
+	// 04. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void delete(int bno) throws Exception;
 	
-	// 05. °Ô½Ã±Û ÀüÃ¼ ¸ñ·Ï
+	// 05. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½
 	public List<BoardVO> listAll() throws Exception;
 	
-	// 06. °Ô½Ã±Û Á¶È¸
-	public void increaseViewCount(int bno, HttpSession session) throws Exception;
+	// 06. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È¸
+	public void increaseViewcnt(int bno, HttpSession session) throws Exception;
+	
+	// ì‚­ì œ ë° ìˆ˜ì • ì‹œ ë¹„ë°€ë²ˆí˜¸ ì¡°íšŒ
+	public String checkPassword(int bno) throws Exception;
 }

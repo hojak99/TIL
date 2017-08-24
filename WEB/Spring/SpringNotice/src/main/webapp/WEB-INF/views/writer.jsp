@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시글 작성</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script>
     $(document).ready(function(){
         $("#btnSave").click(function(){
@@ -13,6 +14,8 @@
             var title = $("#title").val();
             var content = $("#content").val();
             var writer = $("#writer").val();
+            var password = $("#password").val();
+            
             if(title == ""){
                 alert("제목을 입력하세요");
                 document.form1.title.focus();
@@ -28,6 +31,12 @@
                 document.form1.writer.focus();
                 return;
             }
+            if(password == ""){
+            	alert("비밀번호 입력하세요")
+            	document.form1.password.focus();
+            	return;
+            }
+            
             // 폼에 입력한 데이터를 서버로 전송
             document.form1.submit();
         });
@@ -49,6 +58,10 @@
         이름
         <input name="writer" id="writer" placeholder="이름을 입력해주세요">
     </div>
+    <div>
+       비밀번호
+       <input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요">
+    </div>
     <div style="width:650px; text-align: center;">
         <button type="button" id="btnSave">확인</button>
         <button type="reset">취소</button>
@@ -56,4 +69,3 @@
 </form>
 </body>
 </html>
-Colored
