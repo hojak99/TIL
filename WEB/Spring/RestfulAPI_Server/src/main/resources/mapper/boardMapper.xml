@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kjh.hojak.RestfulAPI_Server.mapper.BoardMapper">
+	<insert id="insert">
+		INSERT INTO tbl_board (title, content, writer, password) 
+			VALUES (
+		#{title},
+		#{content},
+		#{writer},
+		#{password}
+		)
+	</insert>
+	
+	<select id="listAll" resultType="com.kjh.hojak.RestfulAPI_Server.vo.BoardVO">
+		SELECT 
+			bno,
+			title,
+			content,
+			writer,
+			regdate,
+			viewcnt
+		FROM
+			tbl_board
+		ORDER BY
+			bno desc,
+			regdate desc
+	</select>
+	
+	<select id="view" resultType="com.kjh.hojak.RestfulAPI_Server.vo.BoardVO">
+        SELECT * FROM tbl_board 
+        WHERE bno = #{bno}
+    </select>
+    
+     <!-- 04. 게시글 조회수 증가처리 -->
+    <update id="increaseViewcnt">
+        UPDATE tbl_board SET viewcnt = viewcnt + 1 
+        WHERE bno = #{bno}
+    </update>
+    
+    <update id="updateArticle" >
+		UPDATE tbl_board SET
+			title = #{title},
+			content = #{content},
+			writer = #{writer}
+		WHERE bno = #{bno}
+	</update>
+	
+	<delete id="deleteArticle">
+		DELETE FROM tbl_board
+		WHERE bno = #{bno}
+	</delete>
+	
+	<!-- 삭제 및 수정할 시 비밀번호 조회 -->
+	<select id="checkPassword" resultType="java.lang.String">
+		SELECT password FROM tbl_board WHERE bno = #{bno}
+	</select>
+</mapper>
