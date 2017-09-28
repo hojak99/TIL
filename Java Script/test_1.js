@@ -63,4 +63,32 @@ var reduceSum_1 = arr_2.reduce(function(pre, value) {
     // 15, 5
 }, 0);
 
-console.log(reduceSum_1, count);
+
+
+var arr_3 = ['foo', 'hello','diamond','A'];
+var resultArr = arr_3.reduce(function (pre, value) {
+    pre.push(value.length);
+    return pre;
+    // [3, 6, 7, 1];
+}, []); 
+
+
+
+var obj = {
+    apple : 500,
+    grape : 2000,
+    berry : 30
+};
+
+var objSum = Object.keys(obj).reduce(function (pre, value) {
+    console.log(pre, value);
+    return pre + obj[value];
+
+    /*
+        0 'apple'
+        500 'grape'
+        2500 'berry'
+
+        2530
+     */
+}, 0);
