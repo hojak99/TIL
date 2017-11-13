@@ -31,3 +31,5 @@ DispatcherServlet 에서 Controller 로 가기 전 처리를 한다.
 그렇기 때문에 정확히 어떤 상황에 어떤 기능을 사용해야 하는가에 대해서 아리송한데, 
 - <code>Filter</code> : 인코딩이나 보안관련 처리같은 전역적으로 처리해야하는 로직
 - <code>Interceptor</code> : 디테일한 처리(인증, 권한 등)에 대해 주로 처리
+
+도움 : http://www.leafcats.com/39
