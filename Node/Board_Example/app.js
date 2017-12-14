@@ -4,7 +4,6 @@
  * require('method-override') : HTTP 메소드 재정의를 위함
  * require('mysql') : mysql 연결을 위한 모듈
  */
-
 var express = require('express');       
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -22,7 +21,21 @@ var server = app.listen(3000, function() {
     mysql_dbc.connection(connection);
 });
 
+/**
+ * Other setting
+ * bodyParser.json() & bodyParser.urlencoded({extended:true}) : bodyParser 로 stream 의 form data 를 req.body 에 옮겨 담는다고 한다.
+ */
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname+"/public"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(methodOverride("_method"));
+
+
 // Routes
+app.use('/', require('./routes/home'));
+
+// HOME
 app.get('/', function(req, res) {
-    res.send('Hello World');
+    res.render('home/welcome');
 });
