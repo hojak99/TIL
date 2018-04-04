@@ -13,7 +13,7 @@
 
 ### 2가지 개발방식 지원
 - 기존의 @MVC 방식 (@Controller, @RestController, @RequestMapping)
-- 새로운 함수형 모델 (RouterFuction, HandlerFuction. 어노테이션이 등장하지 않음) 
+- 새로운 함수형 모델 (RouterFuction, HandlerFuction.) 
 
 ### 새로운 요청 - 응답 모델
 - 서블릿 스택과 API 에서 탈피 (서블릿 API 는 리엑티브 함수형 스타일에 적합하지 않음 - HttpServletRequest, HttpServletResponse)
