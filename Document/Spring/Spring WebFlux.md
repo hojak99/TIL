@@ -72,7 +72,7 @@ public class MyController {
 /**
  * WebFlux 함수형 
  *
- * HandlerFuction 은 FunctionInterface 를 구현했기 때문에 람다식으로 작성한다. 
+ * HandlerFuction 은 FunctionalInterface 를 구현하는 것이기 때문에 람다식으로 작성한다. 
  * HandlerFunction.handle() 의 람다식 - Mono<T> handle(ServerRequest request);
 /*
 HandlerFuction helloHandler = req -> {
@@ -127,5 +127,46 @@ Routerfunctions.route(RequestPredicates.path("/hello/{name}"),
 RouterFunction helloPathVarRouter() {
     return route(RequestPredicates.path("/hello/{name}"), 
         req -> ok().body(fromObject("Hello" + req.pathVariable("name"))));
+}
+```
+
+### 위의 handler 로직이 복잡해졌을 때 분리시켜야 한다.
+- handler 코드만 따로 선언한다.
+- 메소드를 정의하고 메소드 참조로 가져온다.
+
+```
+// 다음과 같이 분리시키는 것이 좋다.  
+HandlerFunction handler = req -> {
+    String res = myService.hello(req.pathVariable("name"));
+    return ok().body(fromObject(res));
+}
+
+return route(path("/hello/{name}"), handler);
+```
+
+
+```
+/**
+ *  람다식은 메소드 타입(파라미터 타입, 리턴 타입, 예외 던지는 것)이 일치하면 일반 메소드와 호환해서 사용할 수 있다. (메소드 레퍼런스)
+ *  다음의 코드는 위에서 분리시킨 handler() 메소드가 같은 의미인 코드이다. 
+ *  아래와 같이 클래스 안에 메소드로 작성한 뒤, 메소드 타입이 일치한다면 아래의 코드와 같이 router function 을 정의할 때 사용할 수 있다.
+ *  이 장점은 하나의 컴포넌트 안에 메소드 형태로 여러 개를 만들어놓고 사용하면 편하다. 
+ */
+
+@Component
+public class HelloHandler {
+    @Autowired MyService myService;
+
+    Mono<ServerResponse> hello(ServerRequest req) {
+        String res = myService.hello(req.pathVariable("name"));
+        return ok().body(fromObject(res));
+    }
+
+    ....
+}
+
+@Bean
+RouterFunction helloRouter(@Autowired HelloHandler helloHandler) {
+    return route(path("/hello/{name}"), helloHandler::hello);
 }
 ```
