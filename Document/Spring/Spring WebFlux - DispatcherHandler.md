@@ -3,4 +3,4 @@ Spring WebFlux 프레임워크의 DispatcherHandler 에 대해서 알아볼 것�
 
 
 ## Introduction
-Spring WebFlux 는 Spring MVC 처럼 중앙에 WebHandler 인 DisPatcherHandler 가 
+Spring WebFlux 는 Spring MVC 처럼 중앙에 WebHandler 인 DisPatcherHandler 가 있는데 실제 작업이 설정(configurable)이나 delegate 요소에 의해 행해지는 동안 request 처리를 위해 shared 알고리즘을 제공한다.
