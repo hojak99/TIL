@@ -23,3 +23,25 @@ WebHttpHandlerBuilder 에 processing chain 을 구축하는 configuration 을 �
 ApplicationContext context = ...
 HttpHandler handler = WebHttpHandlerBuilder.applicationContext(context);
 ```
+
+## Proccessing
+DispatcerHandler 는 다음과 같이 요청을 처리한다.
+- 각 HandlerMapping 은 일치하는 handler 를 찾고 첫 번째로 일치한 handler 를 사용한다.
+- handler 를 발견하면, 적절한 HandlerAdapter 를 통해 실행되며 handler 는 HandlerResult 로 리턴한다.
+- HandlerResult 는 적절한 HandlerResultHandler 에 주어져 응답에 직접 사용하거나 view 를 사용하여 렌더링을 하고 처리를 완료한다.
+
+
+## Result Handling
+`HandlerAdapter` 를 통한 handler 의 호출에서 반환된 값은 몇 가지 추가적인 context 와 함께 `HandlerResult` 로 wrapped 되고, 지원을 요구하는 첫 번째 `HandlerResultHandler` 로 전달된다. 아래의 표는 사용 가능한 `HandlerResultHandler` 구현을 보여주며 이 구현들은 모두 WebFlux Config 에 선원되어 있다.
+
+- ResponseEntityResultHandler
+    - 일반적으로 `@Controller` 에서 ResponseEntity 를 반환한다.
+- ServerResponseResultHandler
+    - 일반적으로 functional endpoint 에서 ServerResponse 를 반환한다. 
+- ResponseBodyResultHandler
+    - @ResponseBody 메소드 또는 @RestController 클래스의 반환 값을 처리한다.
+- ViewResolutionResultHandler
+    - CharSequence 또는 View, Model 또는 Map, Rendering 또는 다른 Object는 model attribute 로 처리된다. 
+
+
+## Exceptions
