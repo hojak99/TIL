@@ -45,3 +45,8 @@ DispatcerHandler 는 다음과 같이 요청을 처리한다.
 
 
 ## Exceptions
+HandlerAdapter 를 통해 반환된 HandlerResult 는 일부 handler-specific 메카니즘을 기반으로 오류처리 기능을 expose 할 수 있다. 이 error function 은 다음 경우에 호출된다.
+- handler(e.g. @Controller) 호출에 실패
+- HandlerResultHandler 를 통한 handler 반환 값 처리에 실패
+
+error function 은 response 를 변경할 수 있다. 예를 들어, 
