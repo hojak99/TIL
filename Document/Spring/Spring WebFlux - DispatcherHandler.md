@@ -49,4 +49,6 @@ HandlerAdapter 를 통해 반환된 HandlerResult 는 일부 handler-specific �
 - handler(e.g. @Controller) 호출에 실패
 - HandlerResultHandler 를 통한 handler 반환 값 처리에 실패
 
-error function 은 response 를 변경할 수 있다. 예를 들어, 
+error function 은 response 를 변경할 수 있다. 예를 들어, handler 에서 반환된 reactive tpee 이 데이터 항목들을 생성하기 전에 error signal 이 발생하는 error status 로 변경된다.
+
+@Controller 클래스의 @ExceptionHandler 메소드가 지원되는 방법이다.
