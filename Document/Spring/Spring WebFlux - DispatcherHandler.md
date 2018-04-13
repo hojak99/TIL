@@ -51,4 +51,5 @@ HandlerAdapter 를 통해 반환된 HandlerResult 는 일부 handler-specific �
 
 error function 은 response 를 변경할 수 있다. 예를 들어, handler 에서 반환된 reactive tpee 이 데이터 항목들을 생성하기 전에 error signal 이 발생하는 error status 로 변경된다.
 
-@Controller 클래스의 @ExceptionHandler 메소드가 지원되는 방법이다.
+이것은 @Controller 클래스 안의 @ExceptionHandler 메소드가 지원되는 방법이다. 반대로 Spring MVC 에서는 HandlerExceptionResolver 를 기반으로 지원된다. 그러나 일반적으로 WebFlux 에서는 @ControllerAdvice 를 사용하여 handler 를 선택하기 전에 발생하는 예외를 처리 할 수는 없다.
+
