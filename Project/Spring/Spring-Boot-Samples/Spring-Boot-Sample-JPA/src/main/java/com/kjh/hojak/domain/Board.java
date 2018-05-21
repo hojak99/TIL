@@ -1,7 +1,6 @@
 package com.kjh.hojak.domain;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +13,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 
-@Entity
+@Table		// 테이블에 관한 정보를 기술한 어노테이션
+@Entity		// 해당 클래스의 인스턴스가 엔티티임을 명시해주는 어노테이션
 public class Board {
 	
 	/**
@@ -49,4 +49,58 @@ public class Board {
 	@LastModifiedDate
 	@Column
 	private LocalDate update_dt;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getWriter_id() {
+		return writer_id;
+	}
+
+	public void setWriter_id(String writer_id) {
+		this.writer_id = writer_id;
+	}
+
+	public LocalDate getCreate_dt() {
+		return create_dt;
+	}
+
+	public void setCreate_dt(LocalDate create_dt) {
+		this.create_dt = create_dt;
+	}
+
+	public LocalDate getUpdate_dt() {
+		return update_dt;
+	}
+
+	public void setUpdate_dt(LocalDate update_dt) {
+		this.update_dt = update_dt;
+	}
+
+	@Override
+	public String toString() {
+		return "Board [id=" + id + ", title=" + title + ", content=" + content + ", writer_id=" + writer_id
+				+ ", create_dt=" + create_dt + ", update_dt=" + update_dt + "]";
+	}
 }
