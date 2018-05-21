@@ -50,6 +50,15 @@ public class Board {
 	@Column
 	private LocalDate update_dt;
 
+	
+	public Board() {}
+	
+	public Board(String writer_id, String title, String content){
+		this.writer_id = writer_id;
+		this.content = content;
+		this.title = title;
+	}
+	
 	public Long getId() {
 		return id;
 	}
