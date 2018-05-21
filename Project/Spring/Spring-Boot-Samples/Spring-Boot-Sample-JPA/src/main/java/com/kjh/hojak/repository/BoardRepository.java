@@ -14,7 +14,7 @@ public interface BoardRepository extends JpaRepository<Board, Long>{
 	 * writer_id 로 Board 찾기
 	 * @return {@link Page}
 	 */
-	Page<Board> findByWriterId(String writer_id, Pageable pageable);
+	Page<Board> findByWriterId(String writerId, Pageable pageable);
 	
 	
 	/**

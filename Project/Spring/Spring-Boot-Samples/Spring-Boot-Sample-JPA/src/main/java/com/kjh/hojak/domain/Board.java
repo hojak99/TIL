@@ -1,6 +1,7 @@
 package com.kjh.hojak.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,22 +40,22 @@ public class Board {
 	private String content;
 	
 	@Column
-	private String writer_id;
+	private String writerId;
 	
 	@CreatedDate
 	@Column
-	private LocalDate create_dt;
+	private LocalDateTime create_dt = LocalDateTime.now();
 	
 	@CreatedDate
 	@LastModifiedDate
 	@Column
-	private LocalDate update_dt;
+	private LocalDateTime update_dt = LocalDateTime.now();
 
 	
 	public Board() {}
 	
-	public Board(String writer_id, String title, String content){
-		this.writer_id = writer_id;
+	public Board(String writerId, String title, String content){
+		this.writerId = writerId;
 		this.content = content;
 		this.title = title;
 	}
@@ -83,33 +84,33 @@ public class Board {
 		this.content = content;
 	}
 
-	public String getWriter_id() {
-		return writer_id;
+	public String getWriterId() {
+		return writerId;
 	}
 
-	public void setWriter_id(String writer_id) {
-		this.writer_id = writer_id;
+	public void setWriterId(String writerId) {
+		this.writerId = writerId;
 	}
 
-	public LocalDate getCreate_dt() {
+	public LocalDateTime getCreate_dt() {
 		return create_dt;
 	}
 
-	public void setCreate_dt(LocalDate create_dt) {
+	public void setCreate_dt(LocalDateTime create_dt) {
 		this.create_dt = create_dt;
 	}
 
-	public LocalDate getUpdate_dt() {
+	public LocalDateTime getUpdate_dt() {
 		return update_dt;
 	}
 
-	public void setUpdate_dt(LocalDate update_dt) {
+	public void setUpdate_dt(LocalDateTime update_dt) {
 		this.update_dt = update_dt;
 	}
 
 	@Override
 	public String toString() {
-		return "Board [id=" + id + ", title=" + title + ", content=" + content + ", writer_id=" + writer_id
+		return "Board [id=" + id + ", title=" + title + ", content=" + content + ", writerId=" + writerId
 				+ ", create_dt=" + create_dt + ", update_dt=" + update_dt + "]";
 	}
 }
