@@ -253,3 +253,12 @@ DI(Dependency Injection), IoC(Inversion of Control), Test 때문에 사용한다
 
 31. AOP (Aspect Oriented Programming)
 공통 관심사를 여러 모듈에 적용하면서 중복된 코드가 생성이 되는데, 이를 어느 한 곳에서 공통된 모듈로 처리하게 만든 것을 AOP 라고 한다.
+
+---
+
+32. 세마포어와 뮤텍스 
+> 세마포어와 뮤텍스는 둘 다 locking 기법이다. 자원에 대해 접근을 제한한다는 기법.
+
+- 뮤텍스 : 한 번에 한 thread 만 돌게하고 나머지는 waiting 하도록 하고, 해당 thread 의 작업이 끝나면 waiting 중이던 쓰레드가 해당 자원을 사용할 수 있도록 한다. (key 는 무조건 1개)
+- 세모포어 : 자원에 접근 할 수 있는 허용갯수를 정해준다. (key 는 여러개 가능. key 를 가지고 있어야 접근 가능)
+
