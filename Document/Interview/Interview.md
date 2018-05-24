@@ -335,3 +335,63 @@ DI(Dependency Injection), IoC(Inversion of Control), Test 때문에 사용한다
 Long Polling 은 실시간 메시지 전달이 중요하지만 서버의 상태 변경이 빈번히 발생하지는 않는 서비스에 적합하다.
 
 즉, 서버에 요청을 보내고 서버 이벤트가 발생할 때까지 연결을 유지하고, 이 상태에서 이벤트가 발생하면 응답을 받아서 처리한다.
+
+---
+
+40. 객체지향과 절차지향
+> 절차지향 : 모든 것들이 순서대로 실행되는 것. 
+> 객체지향 : 순서가 아닌 조직에 관점을 맞춘 방식. 실행되는 절차보다는 객체 간의 관계/조직에 초점이 있음
+
+---
+
+41. Mybatis, Ibatis
+
+---
+
+42. 각 DBMS 차이
+
+---
+
+43. 인터셉터, 필터
+
+---
+
+44. 정규화
+
+---
+
+45. CPU 스케줄링 
+
+---
+
+46. 사용자 수준 쓰레드와 커널 수준 쓰레드
+
+---
+
+47. DFS 와 BFS 차이
+
+---
+
+48. Interface 와 abstract 차이
+
+---
+
+49. 캡술화와 은닉화의 차이
+50. String, StringBuilder, StringBuffer 차이
+51. 추상화란
+52. 3-hands-shaking
+53. sql injection, xss
+54. MVC 패턴
+55. maven
+56. inner 조인, outer join
+57. 정규화
+58. 웹이 구동되는 과정
+59. json이란, xml 차이
+60. C 와 Java 차이점
+61. 제이쿼리가 뭐냐?
+62. DDL DML
+63. CVS SVN
+64. ajax
+65. 아파치 웹서버와 톰캣의 차이, 왜 같이 쓴느지
+66. TDD
+67. DDD
