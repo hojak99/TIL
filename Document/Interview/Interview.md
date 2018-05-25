@@ -345,15 +345,54 @@ Long Polling 은 실시간 메시지 전달이 중요하지만 서버의 상태 
 ---
 
 41. Mybatis, Ibatis
+> 관계형 데이터베이스 프로그래밍을 좀 더 쉽게 할 수 있게 도와주는 프레임워크이다. XML 로 SQL 문을 소스 코드로부터 완전 분리.
 
+해당 프레임워크를 사용하는 이유
+- 소스 코드에 sql 문이 있어서 재사용성 등이 앉돟아짐.
+
+Mybatis, Ibatis 차이
+- Ibatis 는 아파치 프로젝트 였을 때이며, 구글로 넘어가면 Mybatis로 이름을 바꾸고 몇 가지 차이가 생겼다.
+    - ibatis 는 jdk 1.4 이상, Mybatis 는 jdk 1.5 이상
+    - 패키지 구조 다름.
+    - SqlMap.xml 에서 Ibatis 는 "parameterMap", Mybatis 는 "parameterType" 으로 변경
+    - Ibatis 는 네임스페이스 속성이 선택이지만, Mybatis 는 필수이다.
 ---
 
 42. 각 DBMS 차이
+oracle, mysql, mssql 로 비교를 하겠다.
+- mssql 은 윈도우만 지원하며, Oracle 이 제일 많은 os 를 지원한다.
+- 지원하는 언어는 mssql < mysql < oracle 순이다.
+- 똑같은 기능이어도 function 명이 다르다. (Ex. ISNULL, IFNULL, NVL)
 
+추가로 PostgreSql, Mysql 에 차이를 알아봤다.
+- PostGIS의 gist index 의 경우 Mysql 의 spatial index 에 비해 10x 이상의 성능 향상을 가져다 준다고 한다.
+
+잘모르겠다.ㅎㅎ
 ---
 
-43. 인터셉터, 필터
+43. 인터셉터, 필터, AOP
+Spring 인터셉터와 필터, AOP 의 차이에 대해서 알아보겠다.
 
+이 세가지 모두 요청 중간에 가로채서 처리를 하는 의미이다.
+
+차이점
+- 발생하는 시점이 다르다. Filter -> Interceptor -> AOP
+- 적용 방식이 다름. Filter : web.xml, Interceptor : servlet-context.xml
+- 필터는 디스패처 서블릿보다 앞단에 있고, 인터셉터는 디스패처 서블릿을 거치고 들어온다.
+
+Filter
+- 전체적인 Request 에 어떤 처리가 필요할 때
+- 인증, 이미지변환, 데이터 압축, 암호화필터 등
+- 문자 인코딩 등
+
+Interceptor
+- 세션 및 쿠키 체크하는 Http 프로토콜 단위로 처리해야하는 일이 있을 때
+- 로그인 세션 체크 등
+- insert 또는 update 하는 부분에만 로깅하거나 특정 에러처리 부분만 로깅할 때는 불가
+
+AOP
+- 비지니스 단에서 세밀하게 조정할 때
+- 로깅, 트랜잭션, 에러처리 등
 ---
 
 44. 정규화
