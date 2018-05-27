@@ -588,22 +588,44 @@ BFS 는 말 그대로 너비를 기준으로 탐색하는 알고리즘이다.
 
 ---
 
-49. 캡술화와 은닉화의 차이
 50. String, StringBuilder, StringBuffer 차이
-51. 추상화란
-52. 3-hands-shaking
-53. sql injection, xss
-54. MVC 패턴
-55. maven
-56. inner 조인, outer join
-57. 정규화
-58. 웹이 구동되는 과정
-59. json이란, xml 차이
-60. C 와 Java 차이점
-61. 제이쿼리가 뭐냐?
-62. DDL DML
-63. CVS SVN
-64. ajax
-65. 아파치 웹서버와 톰캣의 차이, 왜 같이 쓴느지
-66. TDD
-67. DDD
+> String : 문자열 조작하는 경우 유용하게 사용
+> StringBuilder, StringBuffer : 문자열을 합치거나 더할 때 사용
+
+String 으로도 + 연산자를 이용해서도 문자열을 합치거나 더할 수 있다. 하지만 JDK 1.5 버전 전에는 + 연산자의 성능 상 이슈가 많았다. 왜냐하면, 자바 String 은 불변 클래스이기 때문에 변경된 것처럼 보이지만 내부적으로 변경된 문자열을 새롭게 만들기 때문이다. JDK 1.5 이후로 컴파일 단계에서 StringBulder 로 컴파일 되도록 변경이 됐다고는 한다.
+
+StringBuilder 와 StringBuffer 의 차이는 StringBuilder 는 동기화 지원하지 않고, StrinbBuffer는 Synchronized 키워드로 동기화를 지원한다
+
+> 참고로 내가 직접 String += 연산과 StringBuilder 의 append 메소드로 실험했을 때는 StringBuilder 가 훨씬 빨랐다.
+
+---
+
+52. 추상화란
+> 추상화 : 사전적의미는 특정한 개별 사물과 관련되지 않은 공통된 속성이나 관계 등을 뽑아내는 것  
+
+쉽게 생각해서 List<> 인터페이스를 생각하면 된다.
+
+자바에서는 다음과 같은 코드를 작성할 수 있다.
+```
+List<T> arrList = new ArrayList<>();
+List<t> linkedList = new LinkedList<>();
+```
+
+---
+
+53. 3-hands-shaking
+54. sql injection, xss
+55. MVC 패턴
+56. maven
+57. inner 조인, outer join
+58. 정규화
+59. 웹이 구동되는 과정
+60. json이란, xml 차이
+61. C 와 Java 차이점
+62. 제이쿼리가 뭐냐?
+63. DDL DML
+64. CVS SVN
+65. ajax
+66. 아파치 웹서버와 톰캣의 차이, 왜 같이 쓴느지
+67. TDD
+68. DDD
