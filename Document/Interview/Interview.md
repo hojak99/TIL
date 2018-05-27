@@ -535,6 +535,7 @@ arr.get(4).add(2);
 [5] --->  [3] 
 ```
 
+---
 
 ## 47. DFS 와 BFS 차이
 - DFS (깊이 우선 탐색)
@@ -578,7 +579,9 @@ BFS 는 말 그대로 너비를 기준으로 탐색하는 알고리즘이다.
 
 위와 같이 너비를 기준으로 탐색하는 알고리즘이 BFS(Breath First Search)
 
-48. Interface 와 ㅁbstract 차이
+---
+
+## 48. Interface 와 ㅁbstract 차이
 > Interface : 모든 메소드가 추상메소드이며 (Java 8 이상부터 default 키워드를 이용해서 일반 메소드의 구현도 가능) 상속 받는 것이 아닌 implement 키워드를 이용해 구현한다.
 > Abstract : 추상 메소드가 하나 이상 포함 된 abstract 클래스이다. (일반 클래스에서도 abstract 메소드 정의 가능) abstract 는 일반 클래스에서 상속 받아 사용한다.
 
@@ -588,7 +591,7 @@ BFS 는 말 그대로 너비를 기준으로 탐색하는 알고리즘이다.
 
 ---
 
-49. ArrayList, LinkedList
+## 49. ArrayList, LinkedList
 List<> 인터페이스를 구현하는 ArrayList, LinkedList 클래스가 있다. 
 
 > ArrayList : 배여러럼 공간을 잡은 리스트 형태. 인덱스로 검색 시 한 번에 검색
@@ -597,7 +600,9 @@ List<> 인터페이스를 구현하는 ArrayList, LinkedList 클래스가 있다
 ArrayList 는 중간 데이터의 삭제 및 추가 시 한 칸씩 밀거나 당겨야 하기 때문에 추가, 삭제가 많을 경우는 속도가 LinkedList 보다 느리다.
 LinkedList 는 중간 데이터의 삭제 및 추가 시 그 연결된 주소만 변경하면 되기 때문에 ArrayList 보다 빠르다.
 
-50. String, StringBuilder, StringBuffer 차이
+---
+
+## 50. String, StringBuilder, StringBuffer 차이
 > String : 문자열 조작하는 경우 유용하게 사용
 > StringBuilder, StringBuffer : 문자열을 합치거나 더할 때 사용
 
@@ -609,7 +614,7 @@ StringBuilder 와 StringBuffer 의 차이는 StringBuilder 는 동기화 지원�
 
 ---
 
-52. 추상화란
+## 52. 추상화란
 > 추상화 : 사전적의미는 특정한 개별 사물과 관련되지 않은 공통된 속성이나 관계 등을 뽑아내는 것  
 
 쉽게 생각해서 List<> 인터페이스를 생각하면 된다.
@@ -623,6 +628,14 @@ List<t> linkedList = new LinkedList<>();
 ---
 
 53. 3-hands-shaking
+> 클라이언트와 서버가 통신하기 전에 세 번의 패킷 교환을 통해 확인하는 과정을 말합니다.  
+
+- Client 에서 웹서버로 최초 연결 시도 시 SYN 패킷을 보냄
+- Server 에서는 SYN 패킷을 받으면 이에 대한 응답으로 SYN + ACK 패킷을 client 에게 보냄
+- Client 는 SYN + ACK 를 받으면 연결을 확인하게 되고 Client 는 SYN 에 대한 응답으로 ACK 패킷을 보낸다.
+- Server 는 이 ACK 패킷을 받고 해당 Client ip 에 대한 포트를 ESTABLISHED 상태로 전환한다.
+- 끝
+
 54. sql injection, xss
 55. MVC 패턴
 56. maven
