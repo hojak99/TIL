@@ -627,7 +627,7 @@ List<t> linkedList = new LinkedList<>();
 
 ---
 
-53. 3-hands-shaking
+## 53. 3-hands-shaking
 > 클라이언트와 서버가 통신하기 전에 세 번의 패킷 교환을 통해 확인하는 과정을 말합니다.  
 
 - Client 에서 웹서버로 최초 연결 시도 시 SYN 패킷을 보냄
@@ -639,7 +639,9 @@ List<t> linkedList = new LinkedList<>();
 > SYN : 연결요청 플래그 (시퀀스 번호를 임의적으로 설정해 보낸다)
 > ACK : 응답 플래그 (시퀀스 번호에 TCP 계층에서 길이 또는 데이터 양을 더한 것과 같은 ACK 를 보낸다.)
 
-54. sql injection, xss
+---
+
+## 54. sql injection, xss
 > Sql Injection : 사용자가 서버에 보낸 데이터가 SQL 쿼리로 사용되서 DB 나 시스템에 영향을 주는 공격 기법
 > 서버에 공격
 
@@ -658,6 +660,8 @@ List<t> linkedList = new LinkedList<>();
 사용자가 Controller 를 조작하면 Controller 는 model 을 통해 데이터를 가져오고 그 정보를 바탕으로 View 를 제어해 사용자에게 전달한다.
 
 MVC 패턴을 사용하는 이유 : 각 레이어 별로 서로 영향을 받지 않게 만들어 유지보수, 확장성, 유연성이 증가
+
+---
 
 ## 56. 프로시저란
 > 프로시저 : 일련의 쿼리를 마치 하나의 함수처럼 실행하기 위한 쿼리의 집합이다. 보통 DB 서버에 저장해놓는다.
@@ -684,10 +688,35 @@ MVC 패턴을 사용하는 이유 : 각 레이어 별로 서로 영향을 받지
 
 
 59. inner 조인, outer join
-60. 웹이 구동되는 과정
-61. json이란, xml 차이
-62. C 와 Java 차이점
-63. 제이쿼리가 뭐냐?
+
+---
+
+## 60. Monolithic Architecture, MicroService Architecture
+> Monolithic Architecture : 모든 도메인 로직이 한 프로젝트 안에 들어가 있음
+> MicroService Architecture : 각 중요한 도메인의 기능을 작게 나누어 독립적으로 실행 가능함. (기능을 너무 쪼개면 복잡도 증가)
+
+---
+
+## 61. Redis 사용이유
+> Redis(REmote Dictionary Server) : 인메모리 DB 로 NoSQL & Cache 솔루션이다. Key/value 로 데이터를 저장하며 인메모리 기반의 DB이기 때문에 속도가 빠르다고 한다. (참고로 싱글스레드)
+
+- 리스트, 배열과 같은 데이터를 처리하기 유용
+- 캐시 기능 
+
+---
+
+## 62. 트랜잭션
+> Transaction : 데이터베이스의 상태를 변화시키기 위해 수행하는 작업의 단위
+
+- 원자성 : 트랜잭션이 DB에 모두 반영되거나 전혀 반영되지 않아야 함
+- 일관성 : 트랜잭션의 결과는 항상 일관성 있어야 함 (진행되는 도중 DB 변경되도 처음에 진행하기 위해 참조한 DB로 진행)
+- 독립성 : 트랜잭션이 완료될 때까지, 다른 트랜잭션이 특정 트랜잭션의 결과를 참조할 수 없음
+- 지속성 : 트랙잭션이 성공할 경우 결과는 영구적으로 반영되어야 함
+
+---
+
+## 63. jQuery
+> jQuery : 엘리먼트들을 효율적으로 제어할 수 있는 다양한 수단을 제공하는 자바스크립트 라이브러리.
 
 ---
 
