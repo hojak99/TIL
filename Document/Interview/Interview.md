@@ -688,7 +688,16 @@ MVC 패턴을 사용하는 이유 : 각 레이어 별로 서로 영향을 받지
 61. json이란, xml 차이
 62. C 와 Java 차이점
 63. 제이쿼리가 뭐냐?
-64. DDL DML
+
+---
+
+## 64. DDL DML, DCL
+> DML(Data Manipulation Language) : 데이터 조작어 (SELECT, INSERT, UPDATE, DELETE)
+> DDL(Data Definition Language) : 데이터 정의어 (Create, Alter, Drop, RENAME 등)
+> DCL(Data Control Language) : 데이터 제어어 (Revoke, Grant)
+
+---
+
 65. CVS SVN
 66. ajax
 67. 아파치 웹서버와 톰캣의 차이, 왜 같이 쓴느지
