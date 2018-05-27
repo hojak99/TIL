@@ -588,6 +588,15 @@ BFS 는 말 그대로 너비를 기준으로 탐색하는 알고리즘이다.
 
 ---
 
+49. ArrayList, LinkedList
+List<> 인터페이스를 구현하는 ArrayList, LinkedList 클래스가 있다. 
+
+> ArrayList : 배여러럼 공간을 잡은 리스트 형태. 인덱스로 검색 시 한 번에 검색
+> LinkedList : 데이터 공간을 잡는게 아니라 데이터를 add() 로 넣을 때마다 꼬리(주소)를 무는 식으로 저장공간이 잡힌다. 인덱스로 검색 시 처음부터 검색해야 함
+
+ArrayList 는 중간 데이터의 삭제 및 추가 시 한 칸씩 밀거나 당겨야 하기 때문에 추가, 삭제가 많을 경우는 속도가 LinkedList 보다 느리다.
+LinkedList 는 중간 데이터의 삭제 및 추가 시 그 연결된 주소만 변경하면 되기 때문에 ArrayList 보다 빠르다.
+
 50. String, StringBuilder, StringBuffer 차이
 > String : 문자열 조작하는 경우 유용하게 사용
 > StringBuilder, StringBuffer : 문자열을 합치거나 더할 때 사용
