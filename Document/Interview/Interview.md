@@ -581,9 +581,9 @@ BFS 는 말 그대로 너비를 기준으로 탐색하는 알고리즘이다.
 
 ---
 
-## 48. Interface 와 ㅁbstract 차이
+## 48. Interface 와 Abstract 차이
 > Interface : 모든 메소드가 추상메소드이며 (Java 8 이상부터 default 키워드를 이용해서 일반 메소드의 구현도 가능) 상속 받는 것이 아닌 implement 키워드를 이용해 구현한다.
-> Abstract : 추상 메소드가 하나 이상 포함 된 abstract 클래스이다. (일반 클래스에서도 abstract 메소드 정의 가능) abstract 는 일반 클래스에서 상속 받아 사용한다.
+> Abstract : 추상 메소드가 하나 이상 포함 된 abstract 클래스이다. abstract 는 일반 클래스에서 상속 받아 사용한다.
 
 정의는 위와 같다. 하지만 하는 일은 비슷하다.
 
@@ -692,7 +692,7 @@ MVC 패턴을 사용하는 이유 : 각 레이어 별로 서로 영향을 받지
 ---
 
 ## 60. Monolithic Architecture, MicroService Architecture
-> Monolithic Architecture : 모든 도메인 로직이 한 프로젝트 안에 들어가 있음
+> Monolithic Architecture : 모든 도메인 로직이 한 프로젝트 안에 들어가 있음  
 > MicroService Architecture : 각 중요한 도메인의 기능을 작게 나누어 독립적으로 실행 가능함. (기능을 너무 쪼개면 복잡도 증가)
 
 ---
@@ -721,9 +721,9 @@ MVC 패턴을 사용하는 이유 : 각 레이어 별로 서로 영향을 받지
 ---
 
 ## 64. DDL DML, DCL
-> DML(Data Manipulation Language) : 데이터 조작어 (SELECT, INSERT, UPDATE, DELETE)
-> DDL(Data Definition Language) : 데이터 정의어 (Create, Alter, Drop, RENAME 등)
-> DCL(Data Control Language) : 데이터 제어어 (Revoke, Grant)
+> DML(Data Manipulation Language) : 데이터 조작어 (SELECT, INSERT, UPDATE, DELETE)  
+> DDL(Data Definition Language) : 데이터 정의어 (Create, Alter, Drop, RENAME 등)  
+> DCL(Data Control Language) : 데이터 제어어 (Revoke, Grant)  
 
 ---
 
