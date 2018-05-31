@@ -19,7 +19,7 @@ public class BoardRouter {
 	@Bean
 	RouterFunction<ServerResponse> boardAPI(BoardHandler handler) {
 		return RouterFunctions.
-				route(GET("/api/v1/boards").and(accept(MediaType.APPLICATION_JSON)),
+				route(GET("/boars").and(accept(MediaType.APPLICATION_JSON)),
 					handler::fetchAll);
 	}
 }
