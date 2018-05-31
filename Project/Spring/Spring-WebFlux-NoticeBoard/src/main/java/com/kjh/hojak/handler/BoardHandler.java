@@ -22,4 +22,18 @@ public class BoardHandler {
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(boardRepository.findAll(), Board.class);
 	}
+	
+	public Mono<ServerResponse> save(Mono<Board> request) {
+		return ServerResponse.ok()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(request.flatMap(vo -> {
+					Board board = (Board) vo;
+					return boardRepository.save(board);
+				}), Board.class);
+	}
+	
+	public Mono<Board> test(Board vo){
+		System.out.println(vo);
+		return Mono.just(vo);
+	}
 }
