@@ -24,6 +24,9 @@ public class UserRouter {
                         handler::fetchAll)
 
                 .andRoute(POST("/user").and(accept(MediaType.APPLICATION_JSON)),
-                        request -> handler.save(request.bodyToMono(User.class)));
+                        request -> handler.save(request.bodyToMono(User.class)))
+
+                .andRoute(GET("/user/{writerId}").and(accept(MediaType.APPLICATION_JSON)),
+                        request -> handler.fetch(request));
     }
 }

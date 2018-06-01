@@ -25,22 +25,23 @@ public class UserHandler {
                 .body(userRepository.findAll(), User.class);
     }
 
+    public Mono<ServerResponse> fetch(ServerRequest request) {
+        final String writerId = String.valueOf(request.pathVariable("writerId"));
+
+        return ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(userRepository.findByWriterId(writerId), User.class)
+                .switchIfEmpty(ServerResponse.notFound().build());
+    }
+
     public Mono<ServerResponse> save(Mono<User> request) {
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(
                     request.flatMap(userRequest ->
                          userRepository.findByWriterId(userRequest.getWriterId())
-                                .flatMap(user -> Mono.just("exist user"))
-                                .hasElement().flatMap(isEmpty -> {
-                                    if(isEmpty == false) {
-                                        System.out.println(isEmpty);
-                                        return userRepository.save(userRequest);
-                                    } else {
-                                        new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exist user");
-                                        return Mono.empty();
-                                    }
-                                })
+                                .flatMap(user -> Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exist user")))
+                                .hasElement().flatMap(isEmpty -> userRepository.save(userRequest))
                          ), User.class );
     }
 }
