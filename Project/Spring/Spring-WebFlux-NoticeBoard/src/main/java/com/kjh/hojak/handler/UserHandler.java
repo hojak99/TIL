@@ -38,10 +38,11 @@ public class UserHandler {
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(
-                    request.flatMap(userRequest ->
-                         userRepository.findByWriterId(userRequest.getWriterId())
-                                .flatMap(user -> Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exist user")))
-                                .hasElement().flatMap(isEmpty -> userRepository.save(userRequest))
-                         ), User.class );
+                        request.flatMap(userRequest ->
+                                userRepository.findByWriterId(userRequest.getWriterId())
+                                        .flatMap(user -> Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exist user")))
+                                        // element 가 있을 때 true, 없을 때 false
+                                        .hasElement().flatMap(isEmpty -> userRepository.save(userRequest))
+                        ), User.class);
     }
 }

@@ -9,6 +9,7 @@ public interface UserRepository extends ReactiveCrudRepository<User, String> {
 
     /**
      * writerId 로 User 찾는 메소드. (언더바는 인식 못하는 것 같다.)
+     *
      * @param writerId
      * @return
      */
@@ -17,6 +18,7 @@ public interface UserRepository extends ReactiveCrudRepository<User, String> {
 
     /**
      * writerId 로 User 찾는 메소드. (언더바는 인식 못하는 것 같다.)
+     *
      * @param writerId
      * @return
      */
