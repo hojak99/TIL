@@ -26,10 +26,7 @@ public class BoardHandler {
 	public Mono<ServerResponse> save(Mono<Board> request) {
 		return ServerResponse.ok()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(request.flatMap(vo -> {
-					Board board = (Board) vo;
-					return boardRepository.save(board);
-				}), Board.class);
+				.body(request.flatMap(boardRepository::save), Board.class);
 	}
 	
 	public Mono<Board> test(Board vo){
