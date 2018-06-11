@@ -34,11 +34,12 @@ public class BoardService {
 		return boardRepository.findByWriterId(writerId.trim(), pageable).stream().collect(Collectors.toList());
 	}
 	
+	@Transactional
 	public void create(Board board) throws Exception {
 		Optional.ofNullable(board)
 			.filter(temp -> temp.getTitle() != null)
 			.filter(temp -> temp.getContent() != null)
-			.orElseThrow(() -> new Exception("Create Board is Exception"));
+			.orElseThrow(() -> new Exception("Create Board Exception"));
 		
 		boardRepository.save(board);
 	}

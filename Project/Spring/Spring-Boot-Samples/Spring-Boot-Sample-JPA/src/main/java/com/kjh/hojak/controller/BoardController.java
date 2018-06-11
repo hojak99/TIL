@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kjh.hojak.domain.Board;
+import com.kjh.hojak.domain.User;
+import com.kjh.hojak.repository.UserRepository;
 import com.kjh.hojak.service.BoardService;
 
 @RestController
@@ -15,10 +17,15 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	@PostMapping("/create")
-	public void board(@RequestBody Board board) throws Exception {
-		System.out.println(board.toString());
-		
+	@Autowired
+	
+	@PostMapping("/board")
+	public void createBoard(@RequestBody Board board) throws Exception {
 		boardService.create(board);
+	}
+	
+	@PostMapping("/user")
+	public void createUser(@RequestBody User user) throws Exception {
+		
 	}
 }
