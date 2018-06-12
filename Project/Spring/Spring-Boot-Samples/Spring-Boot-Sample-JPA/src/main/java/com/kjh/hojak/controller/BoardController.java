@@ -1,6 +1,10 @@
 package com.kjh.hojak.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +29,12 @@ public class BoardController {
 	public void createBoard(@RequestBody Board board) throws Exception {
 		boardService.create(board);
 	}
+	
+	@GetMapping("/board")
+	public List<Board> getAllBoard(Pageable pageable) throws Exception {
+		return boardService.findAll(pageable);
+	}
+	
 	
 	@PostMapping("/user")
 	public void createUser(@RequestBody User user) throws Exception {
