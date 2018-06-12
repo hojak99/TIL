@@ -10,6 +10,7 @@ import com.kjh.hojak.domain.Board;
 import com.kjh.hojak.domain.User;
 import com.kjh.hojak.repository.UserRepository;
 import com.kjh.hojak.service.BoardService;
+import com.kjh.hojak.service.UserService;
 
 @RestController
 public class BoardController {
@@ -18,6 +19,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@Autowired
+	private UserService userService;
 	
 	@PostMapping("/board")
 	public void createBoard(@RequestBody Board board) throws Exception {
@@ -26,6 +28,6 @@ public class BoardController {
 	
 	@PostMapping("/user")
 	public void createUser(@RequestBody User user) throws Exception {
-		
+		userService.create(user);
 	}
 }
