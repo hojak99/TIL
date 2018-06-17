@@ -28,7 +28,7 @@ public class UserHandler {
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(userRepository.findByWriterId(writerId), User.class)
+                .body(userRepository.findByWriterId(writerId), User.class);
     }
 
     public Mono<ServerResponse> save(Mono<User> request) {
