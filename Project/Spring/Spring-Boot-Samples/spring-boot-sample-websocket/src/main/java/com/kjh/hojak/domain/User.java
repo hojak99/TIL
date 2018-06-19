@@ -1,12 +1,15 @@
 package com.kjh.hojak.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Table
 @Entity
+@ToString
 public class User {
 
     @Id
@@ -17,4 +20,8 @@ public class User {
 
     @Column
     private String email;
+
+    @CreatedDate
+    @Column
+    private LocalDateTime dt_create;
 }

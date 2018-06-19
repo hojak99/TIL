@@ -28,4 +28,8 @@ public class UserService {
     public List<User> getAllUser(Pageable pageable) throws Exception {
         return userRepository.findAll(pageable).stream().collect(Collectors.toList());
     }
+
+    public List<User> findAll() throws Exception {
+        return userRepository.findAll();
+    }
 }

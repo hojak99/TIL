@@ -19,11 +19,13 @@ public class UserController {
 
     @PostMapping("/user")
     public void createUser(@RequestBody User user) throws Exception {
+        System.out.println(user.toString());
         userService.create(user);
     }
 
     @GetMapping("/user")
-    public List<User> getAllUser(Pageable pageable) throws Exception {
-        return userService.getAllUser(pageable);
+    public List<User> getAllUser() throws Exception {
+        System.out.println(userService.findAll());
+        return userService.findAll();
     }
 }
