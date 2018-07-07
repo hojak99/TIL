@@ -26,3 +26,27 @@ var app = new Vue({
 ```
 vue 하이룽
 ```
+
+---
+
+```
+<div id="app-2">
+  <span v-bind:title="message">
+    마우스 올리면 동적으로 바인딩 된 title 을 볼 수 있음
+  </span>
+</div>
+```
+```
+var app2 = new Vue({
+ el : '#app-2',
+ data: {
+ message: '이 페이지는 '+new Date() + ' 에 로드 되었습니다.'
+ }
+})
+```
+```
+마우스 올리면 동적으로 바인딩 된 title 을 볼 수 있음
+```
+
+여기서 `v-bind` 속성은 디렉티브라고 한다. 디렉티브는 Vue 에서 제공하는 특수 속성임을 나타내는 `v-` 접두어가 붙어있으며 렌더링 된 DOM 에 특수한 반응형 동작을 한다고 한다.   
+기본적으로 해당 요소의 title 속성을 Vue 인스턴스의 message 속성으로 최신 상태를 유지한다.
