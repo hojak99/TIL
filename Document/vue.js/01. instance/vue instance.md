@@ -28,3 +28,85 @@ Root Instance
 ```
 
 확장된 인스턴스를 만들 수 있으나 대게 템플릿에서 사용자 지정 엘리먼트로 선언적으로 작성하는 것이 좋다고 한다. 지금은 우선 모든 Vue 컴포넌트가 본질적으로 확장된 Vue 인스턴스라는 것을 알아야한다.
+
+---
+
+## 속성과 메소드
+각 Vue 인스턴스는 `data` 객체에 있는 모든 속성을 프록시 처리한다.
+
+```
+var data = { a : 1 }
+
+// Vue 인스턴스에 데이터 객체를 추가한다.
+var vm = new Vue({
+    data: data
+})
+
+// 같은 객체를 참조
+vm.a === data.a;       // => true
+
+vm.a = 2;
+data.a      // => 2
+
+data.a = 3;
+vm.a // => 3
+``` 
+
+데이터가 변경되면 화면은 다시 렌더링 된다. 유의해야 할 점은 data 에 있는 속성들은 인스턴스가 생성될 때 존재하는 것들에만 반응형이라는 것이다. 즉, 다음과 같이 새 속성을 추가하면
+```
+vm.b = 'hi';
+```
+
+`b` 가 변경되어도 화면이 갱신되지 않는다. 어떤 속성이 나중에 필요하다는 것을 알고 있으며, 빈 값이거나 존재하지 않은 상태로 시작한다면 아래와 같이 초기값을 지정할 필요가 있다.
+
+```
+data : {
+    newTodoText: '',
+    visitCount : 0,
+    hideCompletedTodos: false,
+    todos: [],
+    error: null
+}
+```
+
+여기서 유일한 예외는 `Object.freeze()` 를 사용하는 경우이다. 이는 기존 속성이 변경되는 것을 막아 반은성 시스템이 추적할 수 없다는 것을 의미한다.
+
+```
+<div id="app">
+    <p>{{ foo }}</p>
+    <!-- obj.foo 는 더이상 변하지 않는다 -->
+    <button v-on:click="foo = 'baz'">Change it</button>
+</div>
+```
+```
+var obj = {
+    foo : 'bar'
+}
+
+Object.freeze(obj)
+
+new Vue({
+    el: '#app',
+    data: obj
+})
+```
+
+Vue 인스턴스는 데이터 속성 이외에도 유용한 인스턴스 속성 및 메소드를 제공한다. 다른 사용자 정의 속성과 구분하기 위해 `$` 접두어를 붙였다.
+
+```
+var data = {
+    a: 1
+}
+
+var vm = new Vue({
+    el : '#example',
+    data : data
+})
+
+vm.$data === data  // => true
+vm.$el === document.getElementById('example')   // => true
+
+vm.$watch('a', function(newVal, oldVal) {
+    // `vm.a` 가 변경되면 호출된다.
+})
+```
