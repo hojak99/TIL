@@ -110,3 +110,27 @@ vm.$watch('a', function(newVal, oldVal) {
     // `vm.a` 가 변경되면 호출된다.
 })
 ```
+
+---
+
+## 인스턴스 라이프사이클 훅
+각 Vue 인스턴스는 생성 될 때 일련의 초기화 단계를 거친다. 예를 들어, 데이터 관찰을 설정하고, 템플릿을 컴파일하고, 인스턴스를 DOM에 마운트하고, 데이터가 변경 될 때 DOM을 업데이트해야 한다. 또한 라이프 사이클 훅 (lifecycle hooks)라는 기능을 실행하여 사용자가 특정 단계에서 자신의 코드를 추가 할 수 있는 기회를 제공한다.
+
+예를 들어, `created` 훅은 인스턴스가 생성된 후에 호출된다.
+```
+new Vue({
+    data: {
+        a: 1
+    },
+    created: function() {
+        console.log('a is : ' + this.a)
+    }
+})
+
+// => "a ais : 1"
+```
+
+인스턴스 라이프사이클의 여러 단계에서 호출될 다른 훅도 있다. 예를 들어, `mounted`, `updated`, `destroyed` 가 있다.
+
+> options 속성이나 콜백에 `created: () => console.log(this.a)` 나 `vm.$watch('a', newValue => this.myMethod())` 와 같은 화살표 함수 사용을 지양하기 바란다.
+> 화살표 함수들은 부모 컨텍스트에 바인딩되기 때문에, `this` 컨텍스트가 호출하는 Vue 인스턴스에서 사용할 경우 `Uncaught TypeError: Cannot read property of undefined`, `Uncaught TypeError: this.myMethod is not a function` 와 같은 오류가 발생하게 된다.
