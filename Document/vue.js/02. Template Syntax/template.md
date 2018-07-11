@@ -7,7 +7,7 @@ Vue.js 는 렌더링 된 DOM 을 기본 Vue 인스턴스의 데이터에 선언�
 
 ---
 
-## 보간법(Interpolation)
+## 보간법(Interpolation) 
 ### 문자열
 데이터 바인딩의 가장 기본 형태는 "Mustache" 구문(이중 중괄호)을 사용한 텍스트 보간이다.
 ```
