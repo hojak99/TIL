@@ -25,7 +25,7 @@ public static Boolean valueOf(boolean b) {
 - public, protected 로 선언된 생성자 없어서 하위 클래스를 못 만듦
 - 다른 정적 메소드와 확연히 구분되지 않음
 
-> 형인자 자료형 객체는 다음을 말한다. `Map<String, List<String>> m = new HashMap<String, List<String>();` 여기서 형인자를 연달아 두 번 사용하는데 Jdk 1.7 부터는 생성자를 호출할 때도 자료형 유추가 가능해서 정적 펙토림 메소드를 추가할 필요가 없어졌다.
+> 형인자 자료형 객체는 다음을 말한다. `Map<String, List<String>> m = new HashMap<String, List<String>();` 여기서 형인자를 연달아 두 번 사용하는데 Jdk 1.7 부터는 생성자를 호출할 때도 자료형 유추가 가능해서 정적 팩토리 메소드를 추가할 필요가 없어졌다.
 
 
 - `valueOf` : 인자로 주어진 값과 같은 값을 갖는 객체를 반환. 형변환 메소드라고 한다
@@ -38,4 +38,127 @@ public static Boolean valueOf(boolean b) {
 
 > 검색해보니 정적 팩토리 메소드에 대해 비판적인 의견도 있다.  
 > https://dzone.com/articles/constructors-or-static-factory-methods
+
+
 ---
+
+## 생성자 인자가 많을 때는 Builder 패턴 적용을 고려하라
+선택적 인자가 많은 상황에서는 생성자를 엄청나게 많이 정의해놓아야 하는 경우가 있다. effective java 에서는 그 예로 성분표에 대한 예를 들었는데, 한 번 성분표에 대한 예를 보겠다.
+
+```
+public class NutritionFacts {
+    private final int servingSize;      // 필수
+    private final int servings;         // 필수
+    private final int calories;         // 선택
+    private final int fat;              // 선택
+    private final int sodium;           // 선택
+    private final int carbohydrate;     // 선택
+
+    public NutritionFacts(int servingSize, int servings) {
+        this(servingSize, servings, 0);
+    }
+
+    public NutritionFacts(int servingSize, int servings, int calories) {
+        this(servingSize, servings, calories, 0);
+    }   
+
+    public NutritionFacts(int servingSize, int servings, int calories, int fat) {
+        this(servingSize, servings, calories, fat, 0);
+    }
+
+    public NutritionFacts(int servingSize, int servings, int calories, int fat, int sodium) {
+        this(servingSize, servings, calories, fat, sodium, 0);
+    }
+
+    public NutritionFacts(int servingSize, int servings, int calories, int fat, int sodium, int carbohydrate) {
+        this.servingSize = servingSize;
+        this.servings = servings;
+        this.calories = calories;
+        this.fat = fat;
+        this.sodium = sodium;
+        this.carbohydrate = carbohydrate;
+    }
+}
+```
+
+위의 클래스로 객체를 생성할 때는 해당 인자 개수에 맞는 생성자를 골라 호출하면 된다.
+
+```
+NutritionFacts cocaCola = new NutritionFacts(240, 8, 100, 3, 35, 27);
+```
+
+이렇게 하다보면, 설정할 필요가 없는 필드에도 인자를 전달해야 하는 경우가 생긴다. 인자 수가 늘어나면 정말 곤란해진다.
+
+> 점층적 생성자 패턴은 잘 동작하지만 인자 수가 늘어나면 클라이언트 코드를 작성하기 어려워지고, 무엇보다 읽기 어려운 코드가 된다.
+
+그냥 처음에 인자 없는 생성자를 호출해 객체를 먼저 만들고, setter 를 호출해 값을 넣어줄 수 있으나 이렇게 된다면 immutable 클래스를 만들 수 없다는 것이다. 
+
+이제 빌더 패턴을 알아보자. 필요한 객체를 직접 생성하는 대신, 클라이언트는 먼저 필수 인자들을 생성자에 전부 전달해 빌더 객체를 만들고 빌더 객체에 정의된 설정메소드들을 호출해 선택전 인자들을 추가해 나가서 마지막에 아무런 인자 없이 build 메소드를 호출해 변경 불가능한 객체를 만드는 것이다. 여기서 빌더 클래스는 빌더가 만드는 객체 클래스의 정적 멤버 클래스로 정의한다.
+
+아래의 예를 보쟈
+
+```
+// 빌더 패턴
+public class NutritionFacts {
+    private final int servingSize;
+    private final int servings;
+    private final int calories;
+    private final int fat;
+    private final int sodium;
+    private final int carbohydrate;
+
+    public static class Builder {
+        // 필수 인자
+        private final int servingSize;
+        private final int servings;
+        private int calories = 0;
+        private int fat = 0;
+        private int carbohydrate = 0;
+        private int sodium = 0;
+
+        public Builder(int servingSize, int servings) {
+            this.servingSize = servingSize;
+            this.servings = servings;
+        }
+
+        public Builder calories(int val) {
+            calories = val;
+            return this;
+        }
+
+        public Builder carbohydrate(int val) {
+            carbohydrate = val;
+            return this;
+        }
+
+        public Builder sodium(int val) {
+            sodium = val;
+            return this;
+        }
+
+        public NutritionFacts build() {
+            return new NutritionFacts(this);
+        }
+    }
+
+    private NutritionFacts(Builder builder) {
+        servingSize = builder.servingSize;
+        servings = builder.servings;
+        calories = builder.calories;
+        fat = builder.fat;
+        sodium = builder.sodium;
+        carbohydrate = builder.carbohydrate;
+    }
+}
+```
+
+위의 코드를 보면 NutritionFacts 객체가 변경 불가능하다는 사실과 모든 인자의 기본값이 한곳에 모여 있다는 것을 알 수 있다.
+
+```
+NutritionFacts cocaCola = new NutritionFacts.Builder(240, 8)
+    .calories(100).sodium(35).carbohydrate(27).build();
+```
+
+이렇게 유연하게 코드를 작성할 수 있다. 하지만 단점도 존재한다. 객체를 생성하려면 우선 빌더 객체를 생성해야 하는데 성능이 중요한 곳에서는 오버헤드 때문에 문제가 발생할 가능성도 있다고 한다. 또한, 점층적 생성자 패턴보다 많은 코드를 요구하기에 인자가 많은 상황에서 사용해야 한다.
+
+> 빌더 패턴은 인자가 많은 생성자나 정적 팩토리가 필요한 클래스를 설계할 때, 특히 대부분의 인자가 선택적 인자인 상황에 유용하다.
