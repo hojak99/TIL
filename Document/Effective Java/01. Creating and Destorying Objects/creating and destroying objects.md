@@ -111,6 +111,8 @@ public class NutritionFacts {
         // 필수 인자
         private final int servingSize;
         private final int servings;
+        
+        // 선택 인자
         private int calories = 0;
         private int fat = 0;
         private int carbohydrate = 0;
