@@ -246,3 +246,64 @@ public class UtilityClass {
 ```
 
 다음과 같은 방법을 사용하면 하위 클래스도 만들 수 없다.모든 생성자는 상위 클래스의 생성자를 명시적, 묵시적으로 호출할 수 있어야 하는데 호출 가능한 생성자가 상위 클래스에 없기 때문이다.
+
+---
+
+## 불필요한 객체는 만들지 마라
+기능적으로 동일한 객체는 필요할 때마다 만드는 것보다 재사용하는 편이 낫다. 
+
+진짜 피해야 하는 예는 다음과 같다.
+```
+String s = new String("string");
+```
+
+위의 방법보다는 다음과 같은 방법이 바람직하다.
+
+```
+String s = "string";
+```
+
+처음에 들었던 예에선 new 로 객체를 생성할 때마다 Heap 영역에 생성이 되는데, 반복문에서 위의 코드를 사용하면 매번 heap 에 쌓이게 된다. 하지만 두 번째 예에선 `string constant pool` 에서만 생성이 되고 변경되기 때문에 두 번째 방법이 바람직하다는 것이다.
+
+그리고 아래의 예에서 나오는 메소드를 정의하면 안된다.
+```
+public class Person {
+    private final Date birthDate;
+
+    public boolean isBabyBoomer() {
+        Calendar gmtCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+
+        gmtCal.set(1946, Calendar.JANUARY, 1, 0, 0, 0);
+        Date boomStart = gmtCal.getTime();
+        gmtCal.set(1965, Calendar.JANUARY, 1, 0, 0, 0);
+        Date boomEnd = gmtCal.getTime();
+        return birthDate.compareTo(boomStart) >= 0 && birthDate.compareTo(boomEnd) < 0;
+    }
+}
+```
+
+위의 예제에서 isBabyBoomer 메소드는 호출될 때마다 Calendar 객체 하나, TimeZone 객체 하나, 그리고 Date 객체 두 개를 쓸데없이 만들어 낸다. 좀 더 효율적인 코드는 정적 초기화 블록을 통해 개선할 수 있다.
+
+```
+public class Person {
+    private final Date birthDate;
+
+    private static final Date BOOM_START;
+    private static final Date BOOM_END;
+
+    static {
+        Calendar gmtCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+
+        gmtCal.set(1946, Calendar.JANUARY, 1, 0, 0, 0);
+        BOOM_START = gmtCal.getTime();
+        gmtCal.set(1965, Calendar.JANUARY, 1, 0, 0, 0);
+        BOOM_END = gmtCal.getTime();
+    }
+
+    public boolean isBabyBoomer() {
+        return birthDate.compareTo(BOOM_START) >= 0 && birthDate.compareTo(BOOM_END) < 0;
+    }
+}
+```
+
+이렇게 개선된 Person 클래스는 Calendar, TimeZone 그리고 Date 객체를 클래스가 초기화 될 때 한 번만 만든다.
