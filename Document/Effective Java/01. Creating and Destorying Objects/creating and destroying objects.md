@@ -164,3 +164,68 @@ NutritionFacts cocaCola = new NutritionFacts.Builder(240, 8)
 이렇게 유연하게 코드를 작성할 수 있다. 하지만 단점도 존재한다. 객체를 생성하려면 우선 빌더 객체를 생성해야 하는데 성능이 중요한 곳에서는 오버헤드 때문에 문제가 발생할 가능성도 있다고 한다. 또한, 점층적 생성자 패턴보다 많은 코드를 요구하기에 인자가 많은 상황에서 사용해야 한다.
 
 > 빌더 패턴은 인자가 많은 생성자나 정적 팩토리가 필요한 클래스를 설계할 때, 특히 대부분의 인자가 선택적 인자인 상황에 유용하다.
+
+---
+
+## private 생성자나 enum 자료형은 싱글턴 패턴을 따르도록 설계하라
+
+> 싱글턴은 객체를 하나만 만들 수 있는 클래스다.
+
+그래서 클래스를 싱클턴으로 만들면 클라이언트를 테스트하기가 어려워질 수가 있다. 싱글턴이 어떤 인터페이스를 구현하는 것이 아니면 가짜 구현으로 대체할 수 없기 때문이다. 
+
+이제 싱글톤을 구현하는 방법에 대해 알아보자
+
+#### 생성자는 private 로 선언, 정적 멤버는 public 을 사용해 final 로 선언
+```
+public class Elvis {
+    public static final Elvis INSTANCE = new Elvis();
+    private Elvis() { .. }
+
+    public void leaveTheBuilding() { .. }
+}
+```
+
+클라이언트가 해당 객체를 변경할 방법은 없지만 리플렉션을 이용해 권한을 획득해 private 생성자를 호출할 수 있다는 것이다. (AccessibleObject, setAccessible)
+
+그래서 위의 접근을 막기 위해 두 번째 객체를 생성하라는 요청을 받으면 예외를 던지도록 생성자를 고쳐야 한다.
+
+#### public 으로 선언된 정적 팩토리 메소드를 이용한다
+```
+public class Elvis {
+    private static final Elvis INSTANCE = new Elvis();
+    private Elvis() { }
+
+    public static Elvis getInstance() {
+        return INSTANCE;
+    }
+}
+```
+
+`Elvis.getInstance()` 는 항상 같은 객체에 대한 참조를 반환한다. public 필드를 사용하면 클래스가 싱글턴인지는 선언만 보면 금방 알 수 있어서 좋다. 해당 방법의 장점으로는, API를 변경하지 않고도 싱글턴 패턴을 포기할 수 있다는 것이다. 또한, 스레드마다 별도의 객체를 반환하도록 팩토리 메소드를 수정하는 것도 간단하다.
+
+해당 방법 외에는 Elvis 객체를 만들 수 없지만 위에서 말했던 리플렉션을 이용해 객체를 생성하는 것을 막을 순 없다.
+
+위에서 말한 방법들로 구현한 싱글턴 클래스를 직렬화 클래스로 만들려면 클래스 선언 부분에 `implements Serializable` 을 추가하는 것으로는 부족하고, 싱글턴 특성을 유지하려면 모든 필드를 `transient`로 선언하고 `readResolve` 메소드를 추가해야 한다. 그렇지 않으면 역직렬화될 때마다 새로운 객체가 생기게 된다.
+
+```
+private Object readResolve() {
+    // 동일한 Elvis 객체가 반환되도록 하는 동시에, 가짜 Elvis 객체는 
+    // 가비지컬렉터가 처리하도록 만든다
+    return INSTANCE;
+}
+```
+
+#### enum 자료형으로 싱글턴 구현
+```
+public enum Elvis {
+    INSTANCE;
+
+    public void leaveTheBuilding() { .. }
+}
+```
+
+이 방법은 public 필드를 사용하는 방법과 동일하다. 좀 더 간결하고, 직렬화가 자동으로 처리된다는 것이다. 
+
+리플렉션을 통한 공격에도 안전하다
+
+싱글톤을 구현하기에 가장 좋은 방법인 것 같다.
