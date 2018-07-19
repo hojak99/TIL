@@ -307,3 +307,66 @@ public class Person {
 ```
 
 이렇게 개선된 Person 클래스는 Calendar, TimeZone 그리고 Date 객체를 클래스가 초기화 될 때 한 번만 만든다.
+
+---
+
+## 유효기간이 지난 객체 참조는 폐기하라
+Java 는 C, C++ 처럼 손수 메모리 관리를 해주지 않아도 가비지컬렉터가 알아서 메모리 관리를 해준다. 하지만, 메모리 관리를 신경쓰지 않아도 되는 것은 아니다.
+
+아래의 스택 예제코드를 보자.
+
+```
+// 메모리 누수가 생기는 코드
+public class Stack {
+ 
+    private Object[] elements;
+    private int size = 0;
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
+     
+    public Stack(){
+        elements = new Object[DEFAULT_INITIAL_CAPACITY];
+    }
+     
+    public void push(Object e) {
+        ensureCapacity();
+        elements[size++] = e;
+    }
+     
+    public Object pop() {
+        if(size == 0){
+            throw new EmptyStackException()
+        }
+        return elements[--size];
+    }
+     
+    private void ensureCapacity() {
+        if(elements.length == size){
+            elements = Arrays.copyOf(elements, 2 * size + 1);
+        }
+    }
+}
+```
+
+위의 예제는 메모리 누수가 생기는 코드이다. 가비지 컬렉터가 해야할 일이 많아져서 성능이 저하되거나, 메모리 요구량이 증가할 것이다.
+
+문제가 생기는 메소드는 `pop()` 메소드 부분에서다. 스택에서 pop 할 시에 제거한 객체를 가비지 컬렉터가 처리하지 못해서 생기는 문제다. 즉, 스택이 제거된 객체에 대한 만기 참조(obsolete reference)를 제거하지 않기 때문이다. 여기서 만기 참조란 다시 이용되지 않을 참조를 말한다.
+
+이러한 문제들을 고치기 위해 사용할 일이 없는 객체 참조는 null 로 만드는 것이다. 아래의 코드를 보자
+
+```
+public Object pop() {
+    if(size == 0) {
+        throw new EmptyStackException();
+    }
+
+    Object results = elements[--size];
+    elements[size] = null;
+    return results;
+}
+```
+
+만기 참조를 null 로 만드는데 나중에 해당 참조 객체를 사용하더라도 `NullPointerException` 이 발생하기 때문에 바로 종료된다는 장점이 있다. 오류는 빨리 알아내는 것이 좋다.
+
+> 객체 참조를 null 처리하는 것은 규범이라기보단 예외적인 조치가 되어야 한다.
+
+만기 참조를 제거하는 가장 좋은 방법은 참조가 보관된 변수가 스코프를 벗어나게 두는 것이다.
