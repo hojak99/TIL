@@ -9,9 +9,8 @@
         </div>
 
         <ul class="list-group">
-            <li class="list-group-item">
-                청소하기
-                
+            <li class="list-group-item" v-for="todo in todos" :key="todo.name">
+                {{todo.name}}
                 <div class="btn-group pull-right" style="font-size:12px; line-height: 1px;">
                     <button type="button" class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         더보기 <span class="caret"></span>
@@ -27,13 +26,24 @@
 
 <script>
     export default {
+        name: 'TodoPage',
         data() {
             return {
-                msg : 'Example Vue'
+                todos: [
+                    {
+                        name : '청소'
+                    },
+                    {
+                        name : '블로그 쓰기'
+                    },
+                    {
+                        name : '밥먹기'
+                    },
+                    {
+                        name : '안녕'
+                    }
+                ]
             };
-        },
-        mounted() {
-            console.log("Component mounted.")
         },
     }
 </script>
