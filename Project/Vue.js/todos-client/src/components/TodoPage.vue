@@ -2,9 +2,9 @@
     <div class="container">
         <h2>TodoList</h2>
         <div class="input-group" style="margin-bottom:10px;">
-            <input type="text" class="form-control" placeholder="할 일을 입력하세요">
+            <input type="text" v-model="name" v-on:keyup.enter="createTodo(name)" class="form-control" placeholder="할 일을 입력하세요">
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button">추가</button>
+                <button class="btn btn-default" type="button" @click="createTodo(name)">추가</button>
             </span>
         </div>
 
@@ -30,6 +30,15 @@
         methods: {
             deleteTodo(i) {
                 this.todos.splice(i, 1);
+            },
+            createTodo(name) {
+                if(name != null) {
+                    this.todos.push({
+                        name : name
+                    });
+
+                    this.name = null;
+                }
             }
         },
         data() {
