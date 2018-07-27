@@ -21,7 +21,7 @@ public class TestController {
 
     @RequestMapping("/{owner}/{repo}")
     @ResponseBody
-    public List<Contributor> contributors(@PathVariable String owner, @PathVariable String repo) {
+    public String contributors(@PathVariable String owner, @PathVariable String repo) {
         return gitHubClient.contributors(owner, repo);
     }
 }
