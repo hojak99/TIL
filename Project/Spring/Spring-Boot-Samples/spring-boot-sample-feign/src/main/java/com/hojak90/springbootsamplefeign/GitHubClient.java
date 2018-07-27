@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Service
-@FeignClient(name = "https://api.github.com")
+@FeignClient(url = "https://api.github.com", name = "GitHub")
 interface GitHubClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/repos/{owner}/{repo}/contributors")
