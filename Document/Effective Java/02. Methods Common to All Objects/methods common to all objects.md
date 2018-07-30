@@ -33,3 +33,40 @@ equals 메소드는 동치 관계를 구현하는데 다음과 같은 관계를 
 - 일관성(consistent) : null 이 아닌 참조 x 와 y가 있을 때, equals 를 통해 비교되는 정보에 아무 변화가 없다면, x.equals(y) 호출 결과는 호출 횟수에 상관없이 항상 같아야 한다.
 
 - null 이 아닌 참조 x 에 대해서, x.equals(null) 은 항상 false 이다.
+
+---
+
+이 위의 equals 규약에 대해서 알아보았으니 조금 더 자세히 알아보자.
+
+- 반사성(Reflexivity): 모든 객체는 자기 자신과 같아야 한다.
+- 대칭성(Summetry): 두 객체에게 서로 같은지 물으면 같은 답이 나와야 한다.
+
+```
+public final class CaseInsensitiveString {
+    private final String s;
+
+    public CaseInsensitiveSting(String s) {
+        if(s == null)
+            throw new NullPointException();
+
+        this.s = s;
+    }
+
+    // 대칭성
+    @Override 
+    public boolean equals(Object o) {
+        if(o instanceof CaseInsensitiveString) 
+            return s.equalsIgnoreCase(
+                ((CaseInsensitiveString) o).s);
+            
+        if(o instanceof String)
+            return s.equalsIgnoreCase((String) o);
+        return false;
+    }
+    ...
+}
+```
+
+cis.equals(s) 는 true 지만, CaseInsensitiveString 의 equals 메소드는 String 객체에 대해 알지만 String 의 equals 는 CaseInsensitiveString 이 뭔지 몰라 s.equals(cis) 는 false 를 반환해 대칭성이 깨진다.
+
+> equals 가 따라야 할 규약을 어기면, 그 객체를 만난 다른 객체들이 어떻게 행동할지 예측할 수 없게 더ㅣㄴ다.
