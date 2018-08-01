@@ -59,6 +59,7 @@ private List<User> userJsonData;
 
 이 때 `LocalTimeDate`, `LocalDate` 같은 객체들을 json 으로 convert 할 때 `created_at : "2018-09-91:~~"` 과 같이 convert 되는 것이 아니라, `year`, `month`, `day` 들 따로따로 분리되서 json 으로 변경되기 때문에 해당 코드를 추가해줘야 제대로 convert 를 한다.
 
+
 ```
 mapper.registerModule(new JavaTimeModule());
 mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
