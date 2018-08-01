@@ -69,4 +69,4 @@ public final class CaseInsensitiveString {
 
 cis.equals(s) 는 true 지만, CaseInsensitiveString 의 equals 메소드는 String 객체에 대해 알지만 String 의 equals 는 CaseInsensitiveString 이 뭔지 몰라 s.equals(cis) 는 false 를 반환해 대칭성이 깨진다.
 
-> equals 가 따라야 할 규약을 어기면, 그 객체를 만난 다른 객체들이 어떻게 행동할지 예측할 수 없게 더ㅣㄴ다.
+> equals 가 따라야 할 규약을 어기면, 그 객체를 만난 다른 객체들이 어떻게 행동할지 예측할 수 없게 된다.
