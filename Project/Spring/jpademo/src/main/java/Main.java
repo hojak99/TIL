@@ -29,6 +29,11 @@ public class Main {
 
             entityManager.persist(member);
 
+            Member findMember = entityManager.find(Member.class, member.getId());
+            Long teamId = findMember.getTempId();
+
+            Team findTeam = entityManager.find(Team.class, teamId);
+
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
