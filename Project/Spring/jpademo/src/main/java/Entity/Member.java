@@ -1,8 +1,9 @@
 package Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
+@Table(name = "MEMBER", indexes = @Index(name = "name_idx1", columnList = "name"))
 @Entity
 public class Member {
     @Id
@@ -10,12 +11,23 @@ public class Member {
     private int age;
     private String name;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getName() {
@@ -26,11 +38,11 @@ public class Member {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }
