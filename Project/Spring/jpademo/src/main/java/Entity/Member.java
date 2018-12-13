@@ -16,7 +16,7 @@ public class Member {
 
     private String name;
 
-    private Long tempId;
+    private Long tempId;        // 이렇게 짜면 레퍼런스만 들고 있어서 또 찾아야 됨. join 쓰면 됨.
 
     public Long getId() {
         return id;
