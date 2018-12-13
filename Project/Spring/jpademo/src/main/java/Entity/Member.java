@@ -7,8 +7,7 @@ import javax.persistence.Id;
 public class Member {
     @Id
     private Long id;
-
-
+    private int age;
     private String name;
 
     public Long getId() {
@@ -25,5 +24,13 @@ public class Member {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
