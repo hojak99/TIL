@@ -1,13 +1,13 @@
 import Entity.Member;
+import Entity.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.Date;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         // EntityManagerFactory 는 딱 하나만 생성.
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("hello");
@@ -18,16 +18,21 @@ public class Main {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         try {
+            Team team = new Team();
+            team.setName("asd");
+
+            entityManager.persist(team);
+
             Member member = new Member();
-            member.setId(1L);
             member.setName("호장권");
-            member.setCreatedAt(new Date());
+            member.setTempId(team.getId());
 
             entityManager.persist(member);
+
             transaction.commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             transaction.rollback();
-        }finally {
+        } finally {
             entityManagerFactory.close();
         }
     }
