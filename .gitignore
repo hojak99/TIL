@@ -74,8 +74,10 @@ local.properties
 
 
 .Project/**/.idea/
-
 .idea/
+
+.Project/**/out
+out/
 
 # User-specific stuff:
 .idea/**/workspace.xml
