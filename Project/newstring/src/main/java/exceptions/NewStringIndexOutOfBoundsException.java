@@ -25,6 +25,6 @@ public class NewStringIndexOutOfBoundsException extends IndexOutOfBoundsExceptio
      * @param index
      */
     public NewStringIndexOutOfBoundsException(int index) {
-        super("String index out of range: " + index);
+        super("NewString index out of range: " + index);
     }
 }

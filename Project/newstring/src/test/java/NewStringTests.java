@@ -1,3 +1,4 @@
+import exceptions.NewStringIndexOutOfBoundsException;
 import implement.NewString;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,6 +19,12 @@ public class NewStringTests {
 
         NewString newString = new NewString("Test");
         NewString afterNewString = new NewString(newString);
-        Assert.assertEquals(newString, afterNewString );
+        Assert.assertEquals(newString, afterNewString);
+    }
+
+    @Test(expected = NewStringIndexOutOfBoundsException.class)
+    public void 뉴_스트링_생성자_테스트() {
+        NewString newString = new NewString("Test".toCharArray(), 0, 2);
+        Assert.assertEquals("Te", newString.getString());
     }
 }

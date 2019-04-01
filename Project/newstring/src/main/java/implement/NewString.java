@@ -50,7 +50,7 @@ public final class NewString implements Serializable, Comparable<NewString>, Cha
 
         if (count <= 0) {
             if (count < 0) {
-                throw new StringIndexOutOfBoundsException(count);
+                throw new NewStringIndexOutOfBoundsException(count);
             }
 
             if (offset <= value.length) {
@@ -60,7 +60,7 @@ public final class NewString implements Serializable, Comparable<NewString>, Cha
         }
 
         if (offset > value.length - count) {
-            throw new StringIndexOutOfBoundsException(offset + count);
+            throw new NewStringIndexOutOfBoundsException(offset + count);
         }
         this.value = Arrays.copyOfRange(value, offset, offset + count);
     }
