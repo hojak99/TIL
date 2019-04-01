@@ -22,9 +22,14 @@ public class NewStringTests {
         Assert.assertEquals(newString, afterNewString);
     }
 
-    @Test(expected = NewStringIndexOutOfBoundsException.class)
-    public void 뉴_스트링_생성자_테스트() {
+    @Test
+    public void 뉴_스트링_자르는_생성자_테스트() {
         NewString newString = new NewString("Test".toCharArray(), 0, 2);
         Assert.assertEquals("Te", newString.getString());
+
+        String string = new String("Test".toCharArray(), 0, 2);
+        String testString = "Te";
+
+        Assert.assertEquals(string, testString);
     }
 }
