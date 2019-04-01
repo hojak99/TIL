@@ -85,13 +85,11 @@ public final class NewString implements Serializable, Comparable<NewString>, Cha
         int len1 = value.length;
         int len2 = o.value.length;
         int lim = Math.min(len1, len2);
-        char v1[] = value;
-        char v2[] = o.value;
 
         int k = 0;
         while (k < lim) {
-            char c1 = v1[k];
-            char c2 = v2[k];
+            char c1 = value[k];
+            char c2 = o.value[k];
             if (c1 != c2) {
                 return c1 - c2;
             }
