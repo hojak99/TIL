@@ -9,4 +9,15 @@ public class NewStringTests {
         NewString newString = new NewString();
         Assert.assertEquals("", newString.getString());
     }
+
+    @Test
+    public void 뉴_스트링_생성자_equals_테스트() {
+        String string = new String("Test");
+        String afterString = new String(string);
+        Assert.assertEquals(string, afterString);
+
+        NewString newString = new NewString("Test");
+        NewString afterNewString = new NewString(newString);
+        Assert.assertEquals(newString, afterNewString );
+    }
 }

@@ -25,7 +25,6 @@ public final class NewString implements Serializable, Comparable<NewString>, Cha
 
     private static final ObjectStreamField[] serialPersistentFields = new ObjectStreamField[0];
 
-    // FIXME "" 원리 파악
     public NewString() {
         this.value = "".toCharArray();
     }
@@ -33,6 +32,11 @@ public final class NewString implements Serializable, Comparable<NewString>, Cha
     public NewString(NewString original) {
         this.value = original.value;
         this.hash = original.hash;
+    }
+
+    public NewString(String original) {
+        this.value = original.toCharArray();
+        this.hash = original.hashCode();
     }
 
     public NewString(char value[]) {
@@ -59,6 +63,27 @@ public final class NewString implements Serializable, Comparable<NewString>, Cha
             throw new StringIndexOutOfBoundsException(offset + count);
         }
         this.value = Arrays.copyOfRange(value, offset, offset + count);
+    }
+
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+
+        if (object instanceof NewString) {
+            NewString anotherString = (NewString) object;
+            int n = value.length;
+            if (n == anotherString.value.length) {
+                int i = 0;
+                while (n-- != 0) {
+                    if (value[i] != anotherString.value[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
