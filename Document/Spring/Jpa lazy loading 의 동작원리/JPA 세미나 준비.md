@@ -91,7 +91,7 @@ retVal = invocation.proceed();
 
 위 debugging 사진을 참고하도록 하자. 
 
-즉, 해당 `target(targetClass)` 에 대한 `method(method)` 를 `args(args)` 를 이용해 메소드를 실행한다. 여기서 `chain` 파라미터는 런타임에 필요한 인터셉터를 의 해놓은 list 이다. 
+즉, 해당 `target(targetClass)` 에 대한 `method(method)` 를 `args(args)` 를 이용해 메소드를 실행한다. 여기서 `chain` 파라미터는 런타임에 필요한 인터셉터를 정의 해놓은 list 이다. 
 
 ![interceptor_5](./lazy_loading_5.PNG) 
 
