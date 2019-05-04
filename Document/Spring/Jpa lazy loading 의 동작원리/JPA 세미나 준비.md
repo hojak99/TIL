@@ -4,11 +4,7 @@
   - JPA Lazy loading 
     - JPA lazy loading 간단 설명
     - 동작 원리
-    - 코드
-  - Dirty Check
-    - Dirty check 란
-    - 동작 원리
-    - 코드
+    - 코드(lazy loading 간단 구현. 코드 짤 시간 있으면)
 
 ## Lazy loading
 쉽게 말해 Lazy loading 은 필요할 때까지 객체 초기화를 지연하기 위해 사용하는 디자인 패턴이다. 
