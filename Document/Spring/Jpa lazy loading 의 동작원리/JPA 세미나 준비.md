@@ -4,7 +4,7 @@
   - JPA Lazy loading 
     - JPA lazy loading 간단 설명
     - 동작 원리
-    - 코드(lazy loading 간단 구현. 코드 짤 시간 있으면)
+    - 코드
 
 ## Lazy loading
 쉽게 말해 Lazy loading 은 필요할 때까지 객체 초기화를 지연하기 위해 사용하는 디자인 패턴이다. 
@@ -27,6 +27,31 @@ JPA 에서는 어떻게 사용되는지 아래를 보고 확인해보자.
 
 ---
 
+### AOP 에 등장하는 용어
+우선 미리 이야기를 하자면 lazy loading 은 프록시 기술을 사용하는데 JPA 에선 Aop 의 Dynamic proxy 를 사용한다. 그렇기 때문에 먼저 AOP 에 관한 용어에 대해서 간략하게 설명을 해보도록 하겠다.
+
+- AOP(Aspect-Oriented Programming) 란
+  - 애플리케이션의 핵심적인 기능에서 부가적인 기능을 분리해 aspect 라는 모듈로 만들어 설계하고 개발하는 방법
+
+- Target 
+   - 부가 기능을 부여할 대상
+
+- Aspect
+  - 핵심 기능에 부가되어 의미를 갖는 특별한 모듈
+  - 부가될 기능을 정의한 advice 와 어디에 적용할 지를 결정하는 pointCut 을 함께 갖고 있음
+
+- Join point
+  - 클래스의 객체 생성 시점, 메소드 호츌 시점, Exceptuon 발생 시점 등, AOP 가 개입되는 시점. spring 에소는 메소드 join point 만 제공. 쉽게 말해서 advice 가 적용될 수 있는 위치를 얘기함.
+
+- Advice
+  - 실질적으로 부가 기능을 담은 구현체. target object 에 종속되 않기 때문에 순수하게 부가 기능에만 집중할 수 있음
+  - spring 에선 `advice` 와 `pointCut` 을 하나로 합쳐서 `advisor` 라고 한다.
+
+- PointCut
+  - 부가 기능이 적용될 대상, 즉 메소드를 선정하는 방법을 얘기함. advice 를 적용할 join point 를 선별하는 기능을 정의한 모듈이라고도 얘기할 수 있음
+
+---
+
 ### 프록시란
 일반적으로 말하는 프록시는 클라이언트와 사용 대상 사이의 대리 역할을 맡은 오브젝트를 두는 방법을 말한다. 
 
@@ -42,6 +67,28 @@ JPA 에서는 어떻게 사용되는지 아래를 보고 확인해보자.
 
 위에서 보았던 `lazy_loading_JPA()` 테스트 메소드를 이용해서 알아보도록 하겠다.
 
+### JDK Dynamic proxy, CGLib
+그 전에 먼저, 프록시는 크게 2가지 종류로 `JDK Dynamic Proxy`, `CGLIB Proxy` 가 있다. 
+
+- JDK Dynamic Proxy
+  - java reflection 을 이용해 프록시 객체 생성
+  - inteface 정의된 것을 기준으로 생성
+
+- CGLib Proxy
+  - 바이트 코드를 조작해 프록시 객체를 생성
+  - interface 없이 프록시 객체 생성
+    - class 를 상속받아 프록시 객체를 생성하기 때문에 final, private 와 같은 경우 지원하지 않음
+
+Spring 에서는 몇몇 특정 조건에 따라 2가지 프록시를 각각 사용하게 끔 설계가 돼 있다.
+
+우선 그 중 하나의 조건이 AOP 의 target 이 되는 클래스가 인터페이스를 구현했다면 `JDK Dynamic Proxy` 를 사용하고, 구현하지 않았다면 `CGLIB` 방식을 사용하도록 돼 있는데 코드를 통해 살펴보도록 하자.
+
+![proxy_code_7](./lazy_loading_7.PNG)
+
+디버깅을 통해서 각각의 JpaRepository 상속하는 interface 들이 각각의 `JdkDynamicAopProxy` 객체를 가지는 것을 확인을 할 수 있었다.
+
+
+### 코드
 우선 다음의 코드에 브레이크 포인트를 걸었다.
 
 ```
@@ -53,6 +100,7 @@ User user = userRepository.findById(595525L)
 ![debugging_code_3_1](./lazy_loading_3_1.PNG)
 
 사진을 보다시피 바로 `JdkDynamicAopProxy` 클래스의 `invoke()` 메소드로 접근 하는 것을 볼 수 있다.
+
 `JdkDynamicAopProxy` 클래스는 `org.springframework.aop.framework` 에서 제공하는 클래스이다. 
 
 ### DynamicProxy
@@ -91,7 +139,7 @@ retVal = invocation.proceed();
 
 위 debugging 사진을 참고하도록 하자. 
 
-즉, 해당 `target(targetClass)` 에 대한 `method(method)` 를 `args(args)` 를 이용해 메소드를 실행한다. 여기서 `chain` 파라미터는 런타임에 필요한 인터셉터를 정의 해놓은 list 이다. 
+즉, 해당 `target(targetClass)` 에 대한 `method(method)` 를 `args(args)` 를 이용해 메소드를 실행한다. 여기서 `chain` 파라미터는 런타임에 필요한 인터셉터를 의 해놓은 list 이다. 
 
 ![interceptor_5](./lazy_loading_5.PNG) 
 
@@ -124,3 +172,14 @@ retVal = invocation.proceed();
 5. 해당 `findById()` 를 `5955525` 라는 인자와 함께 수행하게 됨 (`proceed()`)
 6. 실제 collection 을 사용하려고 할 때 select 쿼리가 수행됨으로 써 동작이 가능해짐
 
+
+> 더 자세한 내용을 이야기 하고 싶었으나 (Pointcut, advice, interceptorsAndDynamicMethodMatchers) 아직 이해가 잘 가지 않아 간단하게 이야기를 했는데 다음 세미나 때는 더 발전된 모습으로 찾아뵐게욤
+
+
+### CGLIB proxy 와 JDK dynamic proxy 가 어떤 것을 기준으로 이용되는가
+`DefaultAopProxyFactory` 참고
+
+
+
+
+> http://blog.naver.com/PostView.nhn?blogId=tmondev&logNo=220558804255&parentCategoryNo=&categoryNo=6&viewDate=&isShowPopularPosts=false&from=postView
