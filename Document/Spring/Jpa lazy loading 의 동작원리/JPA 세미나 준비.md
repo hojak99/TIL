@@ -70,26 +70,6 @@ JPA 에서는 어떻게 사용되는지 아래를 보고 확인해보자.
 
 위에서 보았던 `lazy_loading_JPA()` 테스트 메소드를 이용해서 알아보도록 하겠다.
 
-### JDK Dynamic proxy, CGLib
-그 전에 먼저, 프록시는 크게 2가지 종류로 `JDK Dynamic Proxy`, `CGLIB Proxy` 가 있다. 
-
-- JDK Dynamic Proxy
-  - java reflection 을 이용해 프록시 객체 생성
-  - inteface 정의된 것을 기준으로 생성
-
-- CGLib Proxy
-  - 바이트 코드를 조작해 프록시 객체를 생성
-  - interface 없이 프록시 객체 생성
-    - class 를 상속받아 프록시 객체를 생성하기 때문에 final, private 와 같은 경우 지원하지 않음
-
-Spring 에서는 몇몇 특정 조건에 따라 2가지 프록시를 각각 사용하게 끔 설계가 돼 있다.
-
-우선 그 중 하나의 조건이 AOP 의 target 이 되는 클래스가 인터페이스를 구현했다면 `JDK Dynamic Proxy` 를 사용하고, 구현하지 않았다면 `CGLIB` 방식을 사용하도록 돼 있는데 코드를 통해 살펴보도록 하자.
-
-![proxy_code_7](./lazy_loading_7.PNG)
-
-디버깅을 통해서 각각의 JpaRepository 상속하는 interface 들이 각각의 `JdkDynamicAopProxy` 객체를 가지는 것을 확인을 할 수 있었다.
-
 
 ### 코드
 우선 다음의 코드에 브레이크 포인트를 걸었다.
@@ -106,14 +86,29 @@ User user = userRepository.findById(595525L)
 
 `JdkDynamicAopProxy` 클래스는 `org.springframework.aop.framework` 에서 제공하는 클래스이다. 
 
+### JDK Dynamic proxy, CGLib
+![proxy_code_7](./lazy_loading_7.PNG)
+
+그 전에 먼저, 프록시는 크게 2가지 종류로 `JDK Dynamic Proxy`, `CGLIB Proxy` 가 있다. 
+
+- JDK Dynamic Proxy
+  - java reflection 을 이용해 프록시 객체 생성
+  - inteface 정의된 것을 기준으로 생성
+
+- CGLib Proxy
+  - 바이트 코드를 조작해 프록시 객체를 생성
+  - interface 없이 프록시 객체 생성
+    - class 를 상속받아 프록시 객체를 생성하기 때문에 final, private 와 같은 경우 지원하지 않음
+
+Spring 에서는 몇몇 특정 조건에 따라 2가지 프록시를 각각 사용하게 끔 설계가 돼 있다.
+
+우선 그 중 하나의 조건이 AOP 의 target 이 되는 클래스가 인터페이스를 구현했다면 `JDK Dynamic Proxy` 를 사용하고, 구현하지 않았다면 `CGLIB` 방식을 사용하도록 돼 있는데 코드를 통해 살펴보도록 하자.
+
+
+디버깅을 통해서 각각의 JpaRepository 상속하는 interface 들이 각각의 `JdkDynamicAopProxy` 객체를 가지는 것을 확인을 할 수 있었다.
+
 ### DynamicProxy
-`DynamicProxy` : 프록시 팩토리에 의해 런타임 시 다이나믹하게 만들어지는 오브젝트이다. `Dynamic Proxy Object` 는 target 의 `interface` 와 같은 타입으로 만들어진다.
-
-Spring aop 에서는 `DefaultAopProxyFactory` 클래스를 제공하여 `DynamicAopProxy` 를 생성한다.
-
 ![dynamic_proxy_4](./lazy_loading_4.PNG)
-
-클라이언트는 `Dynamic Proxy Object` 를 `target interface` 통해 사용할 수 있는데 해당 프록시를 생성할 때 인터페이스 정보만 제공하면 해당 interface 를 구현한 클래스의 오브젝트를 자동으로 만들어주기 때문에 편리하다.
 
 `Dynamic Proxy` 가 인터페이스 구현 클래스의 오브젝트는 만들어주나, 부가 기능 코드는 직접 생성해야 하는데 이때 부가 기능은 `InvocationHandler` 를 구현해야 한다. 해당 인터페이스는 다음과 같은 메소드 하나만 가지고 있다.
 
@@ -126,8 +121,6 @@ public Object invoke(Object proxy, Method method, Object[] args) throws Throwabl
 `invoke()` 메소드는 reflection 의 method 인터페이스를 파라미터로 받고 호출될 때 전달할 파라미터도 `args` 로 받는다. 
 
 즉, `Dynamic Proxy Object` 는 클라이언트의 모든 요청을 reflection 정보로 변환해 해당 `invoke()` 메소드로 넘긴다.
-
-> `DynamicAopProxy` 는 `InvocationHandler` 를 구현하는 final 클래스이다.
 
 ---
 
