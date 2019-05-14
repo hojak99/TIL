@@ -11,6 +11,8 @@
 
 JPA 에서는 어떻게 사용되는지 아래를 보고 확인해보자.
 
+![exmaple_code_13](./lazy_loading_1_3.PNG)
+
 ![exmaple_code_1](./lazy_loading_1.PNG)
 
 ![example_code_1_1](./lazy_loading_1_1.PNG)
@@ -36,19 +38,19 @@ JPA 에서는 어떻게 사용되는지 아래를 보고 확인해보자.
 - Target 
    - 부가 기능을 부여할 대상
 
-- Aspect
-  - 핵심 기능에 부가되어 의미를 갖는 특별한 모듈
-  - 부가될 기능을 정의한 advice 와 어디에 적용할 지를 결정하는 pointCut 을 함께 갖고 있음
-
-- Join point
-  - 클래스의 객체 생성 시점, 메소드 호츌 시점, Exceptuon 발생 시점 등, AOP 가 개입되는 시점. spring 에소는 메소드 join point 만 제공. 쉽게 말해서 advice 가 적용될 수 있는 위치를 얘기함.
-
 - Advice
   - 실질적으로 부가 기능을 담은 구현체. target object 에 종속되 않기 때문에 순수하게 부가 기능에만 집중할 수 있음
   - spring 에선 `advice` 와 `pointCut` 을 하나로 합쳐서 `advisor` 라고 한다.
 
-- PointCut
-  - 부가 기능이 적용될 대상, 즉 메소드를 선정하는 방법을 얘기함. advice 를 적용할 join point 를 선별하는 기능을 정의한 모듈이라고도 얘기할 수 있음
+- Join point
+  - 쉽게 말해서 advice 가 적용될 수 있는 위치를 얘기함.
+  - 클래스의 객체 생성 시점, 메소드 호츌 시점, Exception 발생 시점 등, AOP 가 개입되는 시점. spring 에소는 메소드 join point 만 제공.
+
+- Pointcut
+  - 부가 기능(advice) 이 적용될 대상, 즉 메소드를 선정하는 방법을 얘기함. advice 를 적용할 join point 를 선별하는 기능을 정의한 모듈이라고도 얘기할 수 있음
+
+- Advisor
+  - pointcut + advice
 
 ---
 
@@ -57,6 +59,7 @@ JPA 에서는 어떻게 사용되는지 아래를 보고 확인해보자.
 
 프록시 패턴의 프록시는 프록시를 사용하는 방법 중에서 타깃에 대한 접근 방법을 제어하려는 목적을 가진 경우를 말한다. 그래서 target 의 기능을 확장, 추가하지 않는다.
 
+#### lazy loading
 `target object` 를 필요한 시점까지 생성하지 않고 있다가 `target object` 에 대한 `reference` 가 필요하면 `프록시 패턴`을 적용했을 때 이게 바로 `lazy loading` 이다.
 
 클라이언트에게 target 에 대한 reference 를 넘기는 대신 프록시를 넘기고 해당 target 을 사용하려 할 때 프록시가 target object 를 생성하고 요청을 위임해 주는 방식이다.
@@ -160,26 +163,23 @@ retVal = invocation.proceed();
 
 ---
 
-위에서 알아본 방식으로 실제 lazy_loading 을 구현하고 있다. 실제 단순 `findById()` 를 호출해도 `DynamicAopProxy` 로 접근한다. 이렇게 프록시를 이용하기 위해 `JpaRepository Interface` 를 제공하는 것 같기도 하다. (뇌피셜)
+위에서 알아본 방식으로 실제 lazy_loading 을 구현하고 있다. 실제 단순 `findById()` 를 호출해도 `DynamicAopProxy` 로 접근한다. 이렇게 프록시를 이용하기 위해 `JpaRepository Interface` 를 제공하는 것 같다
 
 간단하게 정리하자면 다음과 같은 순으로 동작하게 된다.
 
 1. DB 에서 데이터 조회 시도
    -  `user.getUserConnectedList()`
-2. 해당 코드로 인해 해당 프록시에 요청하게 됨
+2. 해당 호출 코드로 인해 실제 프록시에 요청하게 됨
 3. `DynamicAopProxy` 에서 각각 reflection 을 이용해 클래스, 메소드, 인자 정보를 가지게 됨
 4. 그러면 해당 proxy 에 설정된 target 에 대한 method 를 호출하게 함
 5. 해당 `findById()` 를 `5955525` 라는 인자와 함께 수행하게 됨 (`proceed()`)
 6. 실제 collection 을 사용하려고 할 때 select 쿼리가 수행됨으로 써 동작이 가능해짐
 
 
-> 더 자세한 내용을 이야기 하고 싶었으나 (Pointcut, advice, interceptorsAndDynamicMethodMatchers) 아직 이해가 잘 가지 않아 간단하게 이야기를 했는데 다음 세미나 때는 더 발전된 모습으로 찾아뵐게욤
-
-
-### CGLIB proxy 와 JDK dynamic proxy 가 어떤 것을 기준으로 이용되는가
-`DefaultAopProxyFactory` 참고
-
-
+> 어떻게 advisor 를 통해 메소드를 선택하고 호출하는지 디버깅을 하고 싶었으나 이해가 딸려 하지 못함
 
 
 > http://blog.naver.com/PostView.nhn?blogId=tmondev&logNo=220558804255&parentCategoryNo=&categoryNo=6&viewDate=&isShowPopularPosts=false&from=postView
+
+
+### 코드
